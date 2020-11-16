@@ -1,9 +1,23 @@
-# Grundlagen der Programmierung 2020
+```
+  ____                      _ _                            _
+ / ___|_ __ _   _ _ __   __| | | __ _  __ _  ___ _ __   __| | ___ _ __
+| |  _| '__| | | | '_ \ / _` | |/ _` |/ _` |/ _ | '_ \ / _` |/ _ | '__|
+| |_| | |  | |_| | | | | (_| | | (_| | (_| |  __| | | | (_| |  __| |
+ \____|_|   \__,_|_| |_|\__,_|_|\__,_|\__, |\___|_| |_ \__,_|\___|_|
+                                      |___/
+ ____                                                _
+|  _ \ _ __ ___   __ _ _ __ __ _ _ __ ___  _ __ ___ (_) ___ _ __ _   _ _ __   __ _
+| |_) | '__/ _ \ / _` | '__/ _` | '_ ` _ \| '_ ` _ \| |/ _ | '__| | | | '_ \ / _` |
+|  __/| | | (_) | (_| | | | (_| | | | | | | | | | | | |  __| |  | |_| | | | | (_| |
+|_|   |_|  \___/ \__, |_|  \__,_|_| |_| |_|_| |_| |_|_|\___|_|   \__,_|_| |_|\__, |
+                 |___/                                                       |___/
+```
+
 ## C++ Grundlagen
 ### Compiler
 GNU Compiler
 * `g++ -Wall -std=c++14 programm.cpp`
-  * Kompilieren -> Erzeugt Objektdatei programm.o
+  * Kompilieren → Erzeugt Objektdatei programm.o
 * `g++ -Wall -std=c++14 -o programm programm.o`
   * Erzeugt ausführbare Datei programm aus programm.o
 * Zusammen: `g++ -Wall -std=c++14 -o programm programm.cpp`
@@ -42,7 +56,7 @@ Anhand der **Symbole** prüft der Rechner die formale Korrektheit eines Programm
 **Variablen, Bezeichner und Literale**
 ```c++
   int       a =         3;
-//Datentyp  Bezeichner  Literal => Variable
+//Datentyp  Bezeichner  Literal → Variable
 //          L-Wert      R-Wert
 ```
 *Variablen* sind Repräsentanten für Speicherbereiche.
@@ -90,7 +104,7 @@ c++|Beispiel|Bedeutung
 /|i / 2|Division
 %|i % 4|Modulo (Rest mit Vorzeichen von i)
 
-Für alle anderen Rechenoperationen muss `cmath` eingebunden werden.
+Für alle anderen Rechenoperationen muss `cmath` eingebunden werden
 
 c++|Beispiel|Bedeutung
 ---|--------|---------
@@ -159,7 +173,7 @@ long double|80|±3.4E − 4932 … ± 1.2E + 4932|18 Stellen
   * `double d{ 4E2 };` 400 = 4 ∗ 10^2
 
 **Enumerationen**
-* Enumerationen (enum) sind selbstdefinierte Datentypen, die eine abzählbare Ausprägung von Werten besitzen.
+* Enumerationen (enum) sind selbstdefinierte Datentypen, die eine abzählbare Ausprägung von Werten besitzen
 * Somit kann garantiert werden, dass eine Variable keinen falschen Wert annehmen kann
 ```c++
 enum class Ampelfarbe { Rot, Gruen }; //Neuer Datentyp wird definiert
@@ -180,7 +194,7 @@ enum class Ampelfarbe { Rot = 0, Gruen = 1};  //Explizite Zuweisung
   * Rundung
   * Vorzeichenverlust
 * Jeder R-Wert des Typs char, signed char, unsigned char, short int und unsigned short int kann ohne Informationsverlust in einen int-Wert umgewandelt werden (engl. *integral promotion*)
-* Integrale Typen sind untereinander konvertierbar. Die Fälle, die nicht zu den obigen gehören werden *integral conversion* genannt. Sonderfälle sind die Typen bool und enum.
+* Integrale Typen sind untereinander konvertierbar. Die Fälle, die nicht zu den obigen gehören werden *integral conversion* genannt. Sonderfälle sind die Typen bool und enum
 * Automatische Umwandlung wird unterstützt
 ```c++
 float x {};
@@ -189,7 +203,8 @@ float comp = ( x == 0.0 );  //comp enthält den Wert 1.0
 * Manuelle Umwandlung
 ```c++
 //empfohlene Version in C++
-double d {0.1}; int i = static_cast< int >( d );
+double d {0.1};
+int i = static_cast< int >( d );
 double e = static_cast<double>( i );
 
 //veraltet
@@ -199,3 +214,88 @@ int i = int(d);
 ```
 
 ## RAII und Variablen
+*In C++ wird der Zugriff auf Resourcen häufig über Variablen dargestellt. Das Halten der Resource ist somit automatisch vom Definitionsbereich einer Variablen abhängig. Verlässt diese Variable ihren Definitionsbereich, so kann sie Resourcen elegant und automatisiert freigeben. Gängige Beispiele sind der Zugriff auf*
+* *Speicher(-bereiche) (z.B. double)*
+* *Dateien, Netzwerkports, …(z.B. std::fstream)*
+
+### Dateien lesen und Schreiben
+* Der Dateityp `std::ofstream` *Output-Filesystem* erlaubt es, in Dateien zu schreiben
+* Beim verlassen des Gültigkeitsbereichs wird die Datei automatisch geschlossen
+```c++
+int main() {
+  std::ofstream fileOut("test.txt") //Anlegen einer Variable mit Dateinamen als Argument
+                                    //→ öffnen der Datei
+  if( fileOut ) {                   //falls die Datei schreibbar ist
+    fileOut << "Hallo Welt"         //schreibt "Hallo Welt" in die Datei
+  }
+}                                   //Ende des Blockes, fileOut verliert Gültigkeit
+                                    //Resource wird freigegeben; Datei geschlossen
+```
+
+### Namensräume
+* `std` ist der Namensraum der Standardbibliothek
+* Namensräume werden mit `::` von Variablen abgetrennt
+  * `using namespace std;` setzt `std` als Standard *nicht empfohlen*
+  * `using std::cout;` ermöglicht partielle Nutzung
+  * `std::cout << a` → `cout << a`
+* Eigene Namensräume erstellen
+```c++
+namespace htwk {            //Deklaration eines eigenen Namensraums
+  const int dozenten{ 1 };  //Variable im Namensraum
+  const int studenten{ 2 };
+  namespace info {          //Verschachtelung möglich
+    const int a{ 3 };
+    const int b{ 4 };
+  }
+}
+
+int main() {
+  int dozenten = htwk::dozenten;
+  int a = htwk::info::a;
+}
+```
+
+### if, else und der geschleifte Spaß
+* Fallunterscheidung (wahr oder falsch)
+```c++
+if( … ) {   //wenn …
+  //…       //dann …
+} else {    //sonst …
+  //…       //optional
+}
+```
+* Fallunterscheidung
+```c++
+switch( … ) {       //Unterscheidung anhand von …
+  case 1:           //Fall, dass Wert == 1
+    //…             //dann
+    break;          //beendet Ausführung des switch-Blocks
+  case 'b':         //zulässig char
+    //…
+    break;
+  case farbe::blau: //zulässig enum
+  case farbe::gelb: //wenn einer übereinstimmt
+  case farbe::cyan: //dann
+    //…
+    break;
+  default:          //falls kein anderer Fall eintritt
+    //…
+}
+```
+* Schleifen
+  * `break;` Sofortiger Abbruch der nächstäußeren switch, while, do-while, for-Anweisung
+  * `continue;` Abbruch der aktuellen und sofortiger Start des nächsten Zykels einer while, do-while, for-Anweisung
+```c++
+while( … ) {    //Kopfgesteuerte Schleife
+  //…           //Solange …
+}               //tue …
+
+do{             //Fußgesteuerte Schleife
+  //…           //wird mindestens 1x ausgeführt
+} while( … );
+
+//Zählschleife
+for (int i; i < 100; ++i) {
+  //…
+}
+```
