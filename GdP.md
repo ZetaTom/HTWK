@@ -313,7 +313,7 @@ for (int i; i < 100; ++i) {
 
 ## Funktionen und Funktionsaufrufe
 Wir kennen verschiedene *Unterprogramme* bereits:
-* `std::sqrt`, definiert als `double sqrt( double aqrg )`
+* `std::sqrt`, definiert als `double sqrt( double arg )`
 * `std::isnan`, definiert als `bool isnan( float num )` → Prüft ob Zahl `NaN` ist
 * den Eintrittspunkt des Programms: `int main()`
 
