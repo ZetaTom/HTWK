@@ -16,8 +16,8 @@
 ## C++ Grundlagen
 ### Compiler
 GNU Compiler
-* `g++ -Wall -std=c++14 programm.cpp`
-  * Kompilieren → Erzeugt Objektdatei programm.o
+* `g++ -Wall -std=c++14 programm.cpp` bzw. `g++ -Wall -std=c++14 programm.cpp -c`
+  * Kompilieren bzw. *nur* kompilieren → Erzeugt Objektdatei programm.o
 * `g++ -Wall -std=c++14 -o programm programm.o`
   * Erzeugt ausführbare Datei programm aus programm.o
 * Zusammen: `g++ -Wall -std=c++14 -o programm programm.cpp`
@@ -41,6 +41,7 @@ Strukturen
 * `int main() {` ist der Einstiegspunkt für das Programm
 * `{ … }` bildet den Funktionsrumpf bzw. Block
 * `return 0;` Springt aus ihrem Programmteil heraus und beendet diesen; Rückgabe des Wertes `0`
+  * optionale Rückmeldung an das System, dass die Ausführung erfolgreich war
 
 ### Symbole, Schlüsselwörter, Variablen und Bezeichner
 Anhand der **Symbole** prüft der Rechner die formale Korrektheit eines Programms und setzt es in Maschinensprache um.
@@ -255,6 +256,16 @@ int main() {
 }
 ```
 
+### Globale Variablen (sind zu vermeiden)
+```c++
+int a = 5;    //Deklaration einer globalen Variable
+int main() {
+  //…
+  int b = a;  //Die Variable ist überall gültig
+  //…         //und kann nicht neu definiert werden
+}
+```
+
 ### if, else und der geschleifte Spaß
 * Fallunterscheidung (wahr oder falsch)
 ```c++
@@ -283,8 +294,8 @@ switch( … ) {       //Unterscheidung anhand von …
 }
 ```
 * Schleifen
-  * `break;` Sofortiger Abbruch der nächstäußeren switch, while, do-while, for-Anweisung
-  * `continue;` Abbruch der aktuellen und sofortiger Start des nächsten Zykels einer while, do-while, for-Anweisung
+  * `break;` Sofortiger Abbruch der nächstäußeren switch/while/do-while/for-Anweisung
+  * `continue;` Abbruch der aktuellen und sofortiger Start des nächsten Zykels einer while/do-while/for-Anweisung
 ```c++
 while( … ) {    //Kopfgesteuerte Schleife
   //…           //Solange …
@@ -298,4 +309,108 @@ do{             //Fußgesteuerte Schleife
 for (int i; i < 100; ++i) {
   //…
 }
+```
+
+## Funktionen und Funktionsaufrufe
+Wir kennen verschiedene *Unterprogramme* bereits:
+* `std::sqrt`, definiert als `double sqrt( double aqrg )`
+* `std::isnan`, definiert als `bool isnan( float num )` → Prüft ob Zahl `NaN` ist
+* den Eintrittspunkt des Programms: `int main()`
+
+Unterscheidung in
+* Prozeduren (`void`)
+  * Unterprogramme, die keine Werte zurückgeben
+* Funktionen (`int`, `double`, etc.)
+  * Unterprogramme, die Werte zurückgeben
+  * dienen zur Strukturierung des Programms
+
+### Aufbau einer Funktion
+```c++
+double            sqrt          ( double x  )
+Rückgabedatentyp  Funktionsname   Parameter 
+```
+
+* Rückgabedatentyp: der Typ, den die Funktion an den Aufrufer zurückgibt
+  * `void` → keine Rückgabe
+* Funktionsname: Name der Funktion, case sensitive
+* Argumentenliste: durch Komma getrennte Liste von Datentypen für die Argumente der Funktion
+  * optional mit Bezeichner
+  * kann auch leer sein
+
+```c++
+#include <iostream>
+
+double Quadrat( double x);    //Deklaration einer Funktion, die einen double-Wert
+                              //zurückgibt und einen als Eingabe nimmt (x)
+double Quadrat( double x) {   //Implementierung bzw. Definition
+  return x * x;
+}
+
+int main() {
+  double x{ 3 };
+  double y = Quadrat( x );    //Funktionsaufruf
+  std::cout << x << "²" << "=" << y << std::endl;
+}
+```
+Die Variable `x` kommt zwei Mal vor. Sie ist wegen RAII nur in der jeweiligen Funktion bzw. dem Programmanschnitt definiert. So wird eine Kollision vermieden.
+
+**Funktionsdeklaration**
+```c++
+int f();            //Funktion f mit leerer Argumentenliste
+int f(void);        //Selbiges
+int f(int, char);   //Funktion f mit zwei Parametern
+void f(int, char);  //Selbiges ohne Rückgabewert
+```
+
+**Funktionsdefinition**
+```c++
+int zweiundvierzig() {
+  return 42;
+}
+
+double lineareFnkt( double x, double m, double n ) {
+  return m * x + n;
+}
+
+void ausgabe( double zahl ) {
+  std::cout << "Die Zahl lautet: " << zahl << std::endl;
+}
+```
+
+### Parameterübergabe
+**Call by Value**
+* Variable wird für das Unterprogramm kopiert und separat gespeichert
+* für kleine Datentypen geeignet → sonst hoher Speicher Aufwand
+```c++
+int CallByValue( int a ) {
+  return a * 3;
+}
+```
+
+**Call by const-Reference**
+* bei großen Datenmengen
+* Daten können *nur gelesen* werden, da `const`
+* weist einen neuen Namen für die Bearbeitung in einer Unterfunktion zu (Verknüpfung)
+* Speicheraufwand minimal
+```c++
+int CallByConstReference( const int& a ) {
+  std::cout << a;
+}
+
+int b = 4;
+CallByConstReference(b);
+```
+
+**Call by Reference**
+* bei großen Datenmengen
+* wenn Werte geändert werden müssen → `iostream`
+* weist einen neuen Namen für die Bearbeitung in einer Unterfunktion zu (Verknüpfung)
+* Speicheraufwand minimal
+```c++
+long long CallByReference( long long& a ) {
+  a+= 3;
+}
+
+long long b = 4;
+CallByReference(b);
 ```
