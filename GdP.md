@@ -377,6 +377,20 @@ void ausgabe( double zahl ) {
 }
 ```
 
+C++ unterscheidet Funktionen nach **Funktionsname und Parameter**. Beim Aufrufen wird anhand des Argumentes entschieden, welche Funktion ausgewählt wird. Diese Vorgehensweise nennt man *Überladen der Funktion.*
+```c++
+int sqrt( int );
+float sqrt( float );
+double sqrt( double );
+long double sqrt( long double );
+
+auto a = sqrt( 2 );		// verwendet sqrt( int )
+auto b = sqrt( 2.0f );	// verwendet sqrt( float )
+auto c = sqrt( 2.0 );	// verwendet sqrt( double )
+auto d = sqrt( 2.0l );	// verwendet sqrt( long double )
+```
+
+
 ### Parameterübergabe
 **Call by Value**
 * Variable wird für das Unterprogramm kopiert und separat gespeichert
@@ -413,4 +427,135 @@ long long CallByReference( long long& a ) {
 
 long long b = 4;
 CallByReference(b);
+```
+
+## Iteration und Rekursion
+### Speicherbereiche eines Programms
+```
++-----------------+
+|  Heap / Haufen  |
++-----------------+
+| Stack /  Stapel |
++-----------------+
+| Static,  Global |
++-----------------+
+|   Code (Text)   |
++-----------------+
+```
+**Text Segment**
+* Der ausführbare Code eines Programms
+  * meist nur lesbar
+  * selbstmodifizierender Code aber möglich
+**Global Segment**
+* Globale Variablen (*außerhalb* `main`) und feste Zeichenketten (*im Programm*)
+**Aufrufstapel (Call Stack**
+* Speicherbereich, der zur Laufzeit den aktuellen Zustand speichert
+* Bei jedem Funktionsaufruf wird ein Segment auf den Stapel abgelegt
+* Jeder Eintag beinhaltet mindestens
+  * Aufrufparameter
+  * lokale Variablen
+  * Rückgabewerte
+  * Rücksprungadresse
+
+```
+         Oberes Stapelende
++-----> +-----------------+ +----------+
+Stapel- |Lokale  Variablen|
+zeiger  +-----------------+  Aktueller
+        |Rücksprungadresse|  Aufruf-
++-----> +-----------------+  rahmen
+Rahmen- |    Parameter    |
+zeiger  +-----------------+ +----------+
+        +-----------------+ +----------+
+        |Lokale  Variablen| Aufruf-
+        +-----------------+ Rahmen der
+        |Rücksprungadresse| letzten AE
+        +-----------------+ +----------+
+        +-----------------+ +----------+
+        |Rücksprungadresse| Aufruf-
+        +-----------------+ rahmen der
+        |                 | vorletzten
+        |    Parameter    | Aufrufebene
+        |                 |
+        +-----------------+
+        |        .        |
+        |        .        |
+```
+Stapelinhalt nach Rücksprung
+```
+         Oberes Stapelende
++-----> +-----------------+  +----------+
+Stapel- |  Rückgabewerte  |
+zeiger  +-----------------+   Aktueller
+        +-----------------+   Aufruf-
+        |Lokale  Variablen|   rahmen
+        +-----------------+
+        |Rücksprungadresse|
++-----> +-----------------+  +----------+
+Rahmen- +-----------------+  +----------+
+zeiger  |Rücksprungadresse|  Aufruf-
+        +-----------------+  Rahmen der
+        |                 |  letzten AE
+        |    Parameter    |
+        |                 |
+        +-----------------+  +----------+
+        |        .        |  +----------+
+        |        .        |
+```
+Jeder Aufruf einer Funktion hat ihren eignen Speicher und eigene Variablen auf dem Stapel.
+
+### Rekursion
+Eine Funktion ruft *sich selbst* auf
+```c++
+int funktion( … ) {
+  if( Abbruchfall erreicht ) {            // Rekursionsanfang
+    // Löse den einfachsten Fall          // (mehere möglich)
+    // Ergebnis zurückgeben
+  } else {                                // Rekursionsschritt
+    // Teile das Problem in Teilprobleme
+    // rufe funktion( … ) auf
+    // Kombiniertes Ergebnis zurückgeben
+  }
+```
+
+Rekursion ⇿ Iteration
+```c++
+unsigned int multipliziere( unsigned int a, unsigned int b ) {
+  unsigned int ergebnis = 0;
+  for( unsigned int i = 1; i <= b; ++i ) {
+    ergebnis = ergebnis + a;
+  }
+  return ergebnis;
+}
+
+unsigned int multipliziere( unsigned int a, unsigned int b ) {
+  unsigned int ergebnis = 0;
+  while( b > 0 ) {
+    ergebnis = ergebnis + a; --b;
+  }
+  return ergebnis;
+}
+
+unsigned int multipliziere( unsigned int a, unsigned int b ) {
+  if( b == 0 ) {return 0; }
+  else { return multipliziere( a, b - 1 ) + a; }
+}
+```
+
+**Der größte gemeinsame Teiler**
+* ggT(a, b) = {ggT(b, a - b) falls a > b; ggT(a, b - a) falls b > a}
+* ggT(a, b) = ggT(b, a)
+* ggT(a, a) = a
+```c++
+unsigned int ggT( unsigned int a, unsigned int b ) {
+  if( a == b ) {
+    return a;
+  }
+  else if( a > b ) {
+    return ggT( b, a - b );
+  } else // ( a < b )
+  {
+    return ggT( a, b - a );
+  }
+}
 ```
