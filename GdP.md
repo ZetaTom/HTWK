@@ -532,7 +532,7 @@ a, b ∈ ℕ
 |––|––|––|––|––|  a
 |––|––|––|__|__|  b, c
 |  |  |  |  |  |
-|  |  |  |  |––|Teiler
+|  |  |  |  |––| Teiler
 → Eine Zahl, die a und b teielt muss auch c teilen.
 ```
 ```c++
@@ -595,12 +595,16 @@ constexpr int function(int c);  // deklariert Funktion, die zur Compilezeit ausg
 **Lineare Rekursion**
 * Funktion, die pro Ausführung nur einen rekursiven Aufruf vornimmt
 * Linearer Speicherbedarf
+
 **Endrekursive Funktion**
 * Eine Funktion ist endrekursiv (tail recursive), wenn die Rekursion (außer `return`) der letzte Befehl in der Funktion ist.
 * Können besser optimiert bzw. umgeschrieben werden
+
 **Baumrekursive Funktion/nicht-linear**
 * Funktion, die pro Durch- lauf mehrere Aufrufe von sich selbst beinhaltet
+
 **Indirekte rekursive Funktionen**
 * Zusammenspiel mehrerer Funktionen, die sich untereinander aufrufen
+
 **Gegenseitige Rekursion**
 * Zwei Funktionen, die sich gegenseitig aufrufen
