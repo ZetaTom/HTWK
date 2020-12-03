@@ -520,30 +520,6 @@ int funktion( … ) {
   }
 ```
 
-Rekursion ←→ Iteration
-```c++
-unsigned int multipliziere( unsigned int a, unsigned int b ) {
-  unsigned int ergebnis = 0;
-  for( unsigned int i = 1; i <= b; ++i ) {
-    ergebnis = ergebnis + a;
-  }
-  return ergebnis;
-}
-
-unsigned int multipliziere( unsigned int a, unsigned int b ) {
-  unsigned int ergebnis = 0;
-  while( b > 0 ) {
-    ergebnis = ergebnis + a; --b;
-  }
-  return ergebnis;
-}
-
-unsigned int multipliziere( unsigned int a, unsigned int b ) {
-  if( b == 0 ) {return 0; }
-  else { return multipliziere( a, b - 1 ) + a; }
-}
-```
-
 **Der größte gemeinsame Teiler**
 * ggT(a, b) = {ggT(b, a - b) falls a > b; ggT(a, b - a) falls b > a}
 * ggT(a, b) = ggT(b, a)
@@ -573,7 +549,31 @@ unsigned int ggT( unsigned int a, unsigned int b ) {
 }
 ```
 
-#### Rekursion zur Compilezeit
+### Rekursion ←→ Iteration
+```c++
+unsigned int multipliziere( unsigned int a, unsigned int b ) {
+  unsigned int ergebnis = 0;
+  for( unsigned int i = 1; i <= b; ++i ) {
+    ergebnis = ergebnis + a;
+  }
+  return ergebnis;
+}
+
+unsigned int multipliziere( unsigned int a, unsigned int b ) {
+  unsigned int ergebnis = 0;
+  while( b > 0 ) {
+    ergebnis = ergebnis + a; --b;
+  }
+  return ergebnis;
+}
+
+unsigned int multipliziere( unsigned int a, unsigned int b ) {
+  if( b == 0 ) {return 0; }
+  else { return multipliziere( a, b - 1 ) + a; }
+}
+```
+
+### Rekursion zur Compilezeit
 * Der Compiler kann Rekursion (aber keine Schleifen) auswerten.
 * Festlegen der Werte als `constexpr` → Steht zur Compilezeit fest
   * **ALLE** Parameter müssen zur Compilezeit feststehen
@@ -584,7 +584,7 @@ constexpr int c = 3 * a;        // c = 30 ist konstant
 constexpr int function(int c);  // deklariert Funktion, die zur Compilezeit ausgewertet werden kann.
 ```
 
-#### Definitionen und Begriffe
+### Definitionen und Begriffe
 **Wann ist Rekursion zu verwenden?** (siehe *Rekursion*.)
 * Wenn das Problem rekursiv gestellt ist
   * Fibonacci, Fakultät, Türme von Hanoi, Suchen von Wegen, Pfadplanung…)
