@@ -102,7 +102,7 @@ c++|Beispiel|Bedeutung
 --|--i|vorherige Dekrementierung um eins
 --|i--|nachfolgende Dekrementierung um eins
 \*|5 \* i|Multiplikation
-/|i / 2|Division
+/|i / 2|Division (von Ganzzahlen)
 %|i % 4|Modulo (Rest mit Vorzeichen von i)
 
 Für alle anderen Rechenoperationen muss `cmath` eingebunden werden
@@ -384,10 +384,10 @@ float sqrt( float );
 double sqrt( double );
 long double sqrt( long double );
 
-auto a = sqrt( 2 );		// verwendet sqrt( int )
-auto b = sqrt( 2.0f );	// verwendet sqrt( float )
-auto c = sqrt( 2.0 );	// verwendet sqrt( double )
-auto d = sqrt( 2.0l );	// verwendet sqrt( long double )
+auto a = sqrt( 2 );     // verwendet sqrt( int )
+auto b = sqrt( 2.0f );  // verwendet sqrt( float )
+auto c = sqrt( 2.0 );   // verwendet sqrt( double )
+auto d = sqrt( 2.0l );  // verwendet sqrt( long double )
 ```
 
 
@@ -446,9 +446,11 @@ CallByReference(b);
 * Der ausführbare Code eines Programms
   * meist nur lesbar
   * selbstmodifizierender Code aber möglich
+  
 **Global Segment**
 * Globale Variablen (*außerhalb* `main`) und feste Zeichenketten (*im Programm*)
-**Aufrufstapel (Call Stack**
+
+**Aufrufstapel (Call Stack)**
 * Speicherbereich, der zur Laufzeit den aktuellen Zustand speichert
 * Bei jedem Funktionsaufruf wird ein Segment auf den Stapel abgelegt
 * Jeder Eintag beinhaltet mindestens
@@ -494,9 +496,9 @@ zeiger  +-----------------+   Aktueller
 +-----> +-----------------+  +----------+
 Rahmen- +-----------------+  +----------+
 zeiger  |Rücksprungadresse|  Aufruf-
-        +-----------------+  Rahmen der
-        |                 |  letzten AE
-        |    Parameter    |
+        +-----------------+  rahmen der
+        |                 |  letzten
+        |    Parameter    |  Aufrufebene
         |                 |
         +-----------------+  +----------+
         |        .        |  +----------+
@@ -508,7 +510,7 @@ Jeder Aufruf einer Funktion hat ihren eignen Speicher und eigene Variablen auf d
 Eine Funktion ruft *sich selbst* auf
 ```c++
 int funktion( … ) {
-  if( Abbruchfall erreicht ) {            // Rekursionsanfang
+  if( Abbruchfall erreicht ) {            // Rekursionsanfang mit Abbruchbedingung
     // Löse den einfachsten Fall          // (mehere möglich)
     // Ergebnis zurückgeben
   } else {                                // Rekursionsschritt
@@ -518,7 +520,7 @@ int funktion( … ) {
   }
 ```
 
-Rekursion ⇿ Iteration
+Rekursion ←→ Iteration
 ```c++
 unsigned int multipliziere( unsigned int a, unsigned int b ) {
   unsigned int ergebnis = 0;
@@ -546,6 +548,17 @@ unsigned int multipliziere( unsigned int a, unsigned int b ) {
 * ggT(a, b) = {ggT(b, a - b) falls a > b; ggT(a, b - a) falls b > a}
 * ggT(a, b) = ggT(b, a)
 * ggT(a, a) = a
+```
+a, b ∈ ℕ
+|––|––|––|––|––|  a
+|––|––|––|  |  |  b
+|  |  |  |  |  |
+|––|––|––|––|––|  a
+|––|––|––|__|__|  b, c
+|  |  |  |  |  |
+|  |  |  |  |––|Teiler
+→ Eine Zahl, die a und b teielt muss auch c teilen.
+```
 ```c++
 unsigned int ggT( unsigned int a, unsigned int b ) {
   if( a == b ) {
@@ -559,3 +572,35 @@ unsigned int ggT( unsigned int a, unsigned int b ) {
   }
 }
 ```
+
+#### Rekursion zur Compilezeit
+* Der Compiler kann Rekursion (aber keine Schleifen) auswerten.
+* Festlegen der Werte als `constexpr` → Steht zur Compilezeit fest
+  * **ALLE** Parameter müssen zur Compilezeit feststehen
+```c++
+constexpr int a = 10;           // a = 10 ist konstant
+constexpr int c = 3 * a;        // c = 30 ist konstant
+
+constexpr int function(int c);  // deklariert Funktion, die zur Compilezeit ausgewertet werden kann.
+```
+
+#### Definitionen und Begriffe
+**Wann ist Rekursion zu verwenden?** (siehe *Rekursion*.)
+* Wenn das Problem rekursiv gestellt ist
+  * Fibonacci, Fakultät, Türme von Hanoi, Suchen von Wegen, Pfadplanung…)
+* Wenn keine Schleifen möglich/erlaubt
+* Wenn die maximale Rekursiontiefe nicht überschritten wird
+  * ≙ Anzahl der gleichzeitigen Aufrufe einer rekursiven Funktion
+
+**Lineare Rekursion**
+* Funktion, die pro Ausführung nur einen rekursiven Aufruf vornimmt
+* Linearer Speicherbedarf
+**Endrekursive Funktion**
+* Eine Funktion ist endrekursiv (tail recursive), wenn die Rekursion (außer `return`) der letzte Befehl in der Funktion ist.
+* Können besser optimiert bzw. umgeschrieben werden
+**Baumrekursive Funktion/nicht-linear**
+* Funktion, die pro Durch- lauf mehrere Aufrufe von sich selbst beinhaltet
+**Indirekte rekursive Funktionen**
+* Zusammenspiel mehrerer Funktionen, die sich untereinander aufrufen
+**Gegenseitige Rekursion**
+* Zwei Funktionen, die sich gegenseitig aufrufen
