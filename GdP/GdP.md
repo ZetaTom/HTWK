@@ -781,4 +781,4 @@ text.length();        // liefert Länge des Feldes
 for( size_t = 0; i < text.length(); ++i ) {
   std::cout << "Der Buchstabe an Stelle " << i << " lautet " << text[i] << "\n";
 }
-``
+```
