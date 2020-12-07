@@ -35,7 +35,7 @@ int main() {
 ```
 
 Strukturen
-* `//Ich bin ein Kommentar`
+* `// Ich bin ein Kommentar`
 * `/* Ich ebenfalls */`
 * `#include < … >` bindet Bibliotheken ein
 * `int main() {` ist der Einstiegspunkt für das Programm
@@ -56,9 +56,9 @@ Anhand der **Symbole** prüft der Rechner die formale Korrektheit eines Programm
 
 **Variablen, Bezeichner und Literale**
 ```c++
-  int       a =         3;
-//Datentyp  Bezeichner  Literal → Variable
-//          L-Wert      R-Wert
+    int       a =         3;
+//  Datentyp  Bezeichner  Literal → Variable
+//            L-Wert      R-Wert
 ```
 *Variablen* sind Repräsentanten für Speicherbereiche.
 *Literale* sind konstante Größen in einem Programm. Sie beschreiben die konkrete Werte für einen Datentyp.
@@ -75,21 +75,29 @@ Bezeichner| Definiert als
 
 **Deklaration und Initialisierung**
 ```c++
-double d;           //deklariert aber nicht initialiert
-double e = 1.0;     //reserviert Speicher und initialisiert ihn mit dem Wert 1
+double d;           // deklariert aber nicht initialiert
+double e = 1.0;     // reserviert Speicher und initialisiert ihn mit dem Wert 1
 double f( 1.0 );
-double g{ 1.0 };    //deklariert und initialisert, Prüfung auf Richtigkeit beim kompilieren
-double i = double();//reserviert Speicher und initialisiert ihn mit dem Wert 0
-double j{};         //reserviert Speicher und initialisiert ihn mit dem Wert 0
+double g{ 1.0 };    // deklariert und initialisert, Prüfung auf Richtigkeit beim kompilieren
+double i = double();// reserviert Speicher und initialisiert ihn mit dem Wert 0
+double j{};         // reserviert Speicher und initialisiert ihn mit dem Wert 0
 ```
 
 **Konstanten**
 ```c++
-double d{ 1.0 };              //defiert d und setzt den Wert von d auf 1.0
-                              //d kann im Programm verändert werden
-contexpr double e{ 0.5/3.1};  //e ist ein konstanter Ausdruck und nach Definition nicht veränderbar
-const double f{ 0.5/3.1 };    //f ist eine Konstante, die nach dem kompilieren konstant ist
-constexpr double g{ f };      //in Ordnung, da ableitbar
+double d{ 1.0 };              // defiert d und setzt den Wert von d auf 1.0
+                              // d kann im Programm verändert werden
+contexpr double e{ 0.5/3.1};  // e ist ein konstanter Ausdruck und nach Definition nicht veränderbar
+const double f{ 0.5/3.1 };    // f ist eine Konstante, die nach dem kompilieren konstant ist
+constexpr double g{ f };      // in Ordnung, da ableitbar
+```
+
+**Statische Variablen**
+```c++
+void f(int a, int b) {
+  static int n = 0; // beim ersten Funktionsdurchlauf: definiert und setzt n auf 0
+  // …              // bei folgenden Aufrufen: wird n vom vorhergehenden Aufruf verwendet
+}                   // für Rekursion nützlich (siehe Hanoi)
 ```
 
 ### (Mathematische) Operatoren
@@ -135,6 +143,7 @@ c++|Beispiel|Bedeutung
 **bool**
 * Akzeptiert zwei Zustände
 * true (1) oder false (0)
+
 **char**
 * Zeichen, Ziffer, Steuerzeichen
 * Intern als ASCII-Nummer gespeichert
@@ -177,18 +186,18 @@ long double|80|±3.4E − 4932 … ± 1.2E + 4932|18 Stellen
 * Enumerationen (enum) sind selbstdefinierte Datentypen, die eine abzählbare Ausprägung von Werten besitzen
 * Somit kann garantiert werden, dass eine Variable keinen falschen Wert annehmen kann
 ```c++
-enum class Ampelfarbe { Rot, Gruen }; //Neuer Datentyp wird definiert
-Ampelfarbe ampel1 = Ampelfarbe::Rot;  //Variablen können nur Rot und Gruen annehmen
+enum class Ampelfarbe { Rot, Gruen }; // Neuer Datentyp wird definiert
+Ampelfarbe ampel1 = Ampelfarbe::Rot;  // Variablen können nur Rot und Gruen annehmen
 if( anfrageVonFussgaenger ) {
   ampel1 = Ampelfarbe::Gruen;
 }
 ```
 * Interne Speicherung als Ganzzahl
 ```c++
-enum class Ampelfarbe { Rot = 0, Gruen = 1};  //Explizite Zuweisung
+enum class Ampelfarbe { Rot = 0, Gruen = 1};  // Explizite Zuweisung
 ```
 
-**Typumwandlungen**
+###Typumwandlungen
 * Umwandlung von Typen kann zu Genauigkeitsverlusten bis hin zum Informationsverlust führen. Ursachen dafür sind:
   * Genauigkeitverlust
   * Überschreitung des Wertebereiches
@@ -199,16 +208,17 @@ enum class Ampelfarbe { Rot = 0, Gruen = 1};  //Explizite Zuweisung
 * Automatische Umwandlung wird unterstützt
 ```c++
 float x {};
-float comp = ( x == 0.0 );  //comp enthält den Wert 1.0
+float comp = ( x == 0.0 );  // comp enthält den Wert 1.0
 ```
-* Manuelle Umwandlung
+
+**Manuelle Umwandlung**
 ```c++
-//empfohlene Version in C++
+// empfohlene Version in C++
 double d {0.1};
 int i = static_cast< int >( d );
 double e = static_cast<double>( i );
 
-//veraltet
+// veraltet
 double d {0.1};
 int i = (int)d;
 int i = int(d);
@@ -219,18 +229,46 @@ int i = int(d);
 * *Speicher(-bereiche) (z.B. double)*
 * *Dateien, Netzwerkports, …(z.B. std::fstream)*
 
+### Ein- und Ausgabe
+* Ausgabe aka. `printf`
+  * Enthalten in `iostream`
+  * `std::cout << var` bzw. `std::cout << "Hallo"`
+  * Verkettung möglich `std::cout << "Wert von n: " << n "MeV"`
+  * neue Zeilen
+    * `std::endl` fügt programmabhängig das Zeilenende ein und wartet, bis Ausgabe beendet
+    * `"\n"` Zeilenende unter *NIX, inkompatibel mit z.B. WIN
+    * `std::flush` Wartet bis die Ausgabe beendet ist; Erzwingt die Ausgabe
+* Formatierung von Zahlen
+  * Führende Zeichen bzw. Leerzeichen Einfügen
+    * Bestandteil von `iomanip`
+    * `std::cout << std : : setw ( 4 ) << 1 ;` gibt `   1` aus
+    * `std::cout << std::setfill ('x') << std::setw (10) << 42` gibt `xxxxxxxx42` aus
+  * Pluszeichen ausgeben: `std::cout << std::showpos`
+  * Wissenschaftliche Schreibweise: `std::cout << std::scientific`
+  * Ausgabegenauigkeit festlegen
+    * `std::cout << std::setprecision(5) << 3.14159` gibt `3.1416` aus
+    * `std::cout << std::setprecision(9) << 3.14159` gibt auch `3.1416` aus
+    * `std::cout << std::fixed << std::setprecision(9) << 3.14159` gibt `3.141590000` aus
+* Eingabe lesen
+  * Enthalten in `iostream`
+  * Eingabe von *Worten* möglich. D.h. Bis zu `\n` oder `␣`
+  * `std::cin >> var`
+  * Einlesen einer Zeile möglich mit: `std::getline(std::cin, var)`
+    * also bis LF lesen
+    
+
 ### Dateien lesen und Schreiben
 * Der Dateityp `std::ofstream` *Output-Filesystem* erlaubt es, in Dateien zu schreiben
 * Beim verlassen des Gültigkeitsbereichs wird die Datei automatisch geschlossen
 ```c++
 int main() {
-  std::ofstream fileOut("test.txt") //Anlegen einer Variable mit Dateinamen als Argument
-                                    //→ öffnen der Datei
-  if( fileOut ) {                   //falls die Datei schreibbar ist
-    fileOut << "Hallo Welt"         //schreibt "Hallo Welt" in die Datei
+  std::ofstream fileOut("test.txt") // Anlegen einer Variable mit Dateinamen als Argument
+                                    // → öffnen der Datei
+  if( fileOut ) {                   // falls die Datei schreibbar ist
+    fileOut << "Hallo Welt"         // schreibt "Hallo Welt" in die Datei
   }
-}                                   //Ende des Blockes, fileOut verliert Gültigkeit
-                                    //Resource wird freigegeben; Datei geschlossen
+}                                   // Ende des Blockes, fileOut verliert Gültigkeit
+                                    // Resource wird freigegeben; Datei geschlossen
 ```
 
 ### Namensräume
@@ -241,10 +279,10 @@ int main() {
   * `std::cout << a` → `cout << a`
 * Eigene Namensräume erstellen
 ```c++
-namespace htwk {            //Deklaration eines eigenen Namensraums
-  const int dozenten{ 1 };  //Variable im Namensraum
+namespace htwk {            // Deklaration eines eigenen Namensraums
+  const int dozenten{ 1 };  // Variable im Namensraum
   const int studenten{ 2 };
-  namespace info {          //Verschachtelung möglich
+  namespace info {          // Verschachtelung möglich
     const int a{ 3 };
     const int b{ 4 };
   }
@@ -258,56 +296,56 @@ int main() {
 
 ### Globale Variablen (sind zu vermeiden)
 ```c++
-int a = 5;    //Deklaration einer globalen Variable
+int a = 5;    // Deklaration einer globalen Variable
 int main() {
-  //…
-  int b = a;  //Die Variable ist überall gültig
-  //…         //und kann nicht neu definiert werden
+  // …
+  int b = a;  // Die Variable ist überall gültig
+  // …        // und kann nicht neu definiert werden
 }
 ```
 
 ### if, else und der geschleifte Spaß
 * Fallunterscheidung (wahr oder falsch)
 ```c++
-if( … ) {   //wenn …
-  //…       //dann …
-} else {    //sonst …
-  //…       //optional
+if( … ) {   // wenn …
+  // …      // dann …
+} else {    // sonst …
+  // …      // optional
 }
 ```
 * Fallunterscheidung
 ```c++
-switch( … ) {       //Unterscheidung anhand von …
-  case 1:           //Fall, dass Wert == 1
-    //…             //dann
-    break;          //beendet Ausführung des switch-Blocks
-  case 'b':         //zulässig char
-    //…
+switch( … ) {       // Unterscheidung anhand von …
+  case 1:           // Fall, dass Wert == 1
+    // …            // dann
+    break;          // beendet Ausführung des switch-Blocks
+  case 'b':         // zulässig char
+    // …
     break;
-  case farbe::blau: //zulässig enum
-  case farbe::gelb: //wenn einer übereinstimmt
-  case farbe::cyan: //dann
-    //…
+  case farbe::blau: // zulässig enum
+  case farbe::gelb: // wenn einer übereinstimmt
+  case farbe::cyan: // dann
+    // …
     break;
-  default:          //falls kein anderer Fall eintritt
-    //…
+  default:          // falls kein anderer Fall eintritt
+    // …
 }
 ```
 * Schleifen
   * `break;` Sofortiger Abbruch der nächstäußeren switch/while/do-while/for-Anweisung
   * `continue;` Abbruch der aktuellen und sofortiger Start des nächsten Zykels einer while/do-while/for-Anweisung
 ```c++
-while( … ) {    //Kopfgesteuerte Schleife
-  //…           //Solange …
-}               //tue …
+while( … ) {    // Kopfgesteuerte Schleife
+  // …          // Solange …
+}               // tue …
 
-do{             //Fußgesteuerte Schleife
-  //…           //wird mindestens 1x ausgeführt
+do{             // Fußgesteuerte Schleife
+  // …          // wird mindestens 1x ausgeführt
 } while( … );
 
-//Zählschleife
+// Zählschleife
 for (int i; i < 100; ++i) {
-  //…
+  // …
 }
 ```
 
@@ -340,15 +378,15 @@ Rückgabedatentyp  Funktionsname   Parameter
 ```c++
 #include <iostream>
 
-double Quadrat( double x);    //Deklaration einer Funktion, die einen double-Wert
-                              //zurückgibt und einen als Eingabe nimmt (x)
-double Quadrat( double x) {   //Implementierung bzw. Definition
+double Quadrat( double x);    // Deklaration einer Funktion, die einen double-Wert
+                              // zurückgibt und einen als Eingabe nimmt (x)
+double Quadrat( double x) {   // Implementierung bzw. Definition
   return x * x;
 }
 
 int main() {
   double x{ 3 };
-  double y = Quadrat( x );    //Funktionsaufruf
+  double y = Quadrat( x );    // Funktionsaufruf
   std::cout << x << "²" << "=" << y << std::endl;
 }
 ```
@@ -356,10 +394,10 @@ Die Variable `x` kommt zwei Mal vor. Sie ist wegen RAII nur in der jeweiligen Fu
 
 **Funktionsdeklaration**
 ```c++
-int f();            //Funktion f mit leerer Argumentenliste
-int f(void);        //Selbiges
-int f(int, char);   //Funktion f mit zwei Parametern
-void f(int, char);  //Selbiges ohne Rückgabewert
+int f();            // Funktion f mit leerer Argumentenliste
+int f(void);        // Selbiges
+int f(int, char);   // Funktion f mit zwei Parametern
+void f(int, char);  // Selbiges ohne Rückgabewert
 ```
 
 **Funktionsdefinition**
@@ -389,7 +427,6 @@ auto b = sqrt( 2.0f );  // verwendet sqrt( float )
 auto c = sqrt( 2.0 );   // verwendet sqrt( double )
 auto d = sqrt( 2.0l );  // verwendet sqrt( long double )
 ```
-
 
 ### Parameterübergabe
 **Call by Value**
@@ -427,6 +464,24 @@ long long CallByReference( long long& a ) {
 
 long long b = 4;
 CallByReference(b);
+```
+
+### Dokumentation von Funktionen
+```c++
+/**
+ * @brief Berechnet die Quadratwurzel aus der positiven Zahl c
+ *
+ * Berechnet die Quadratwurzel über das iterative Newtonverfahren
+ * zum Berechnen der Nullstellen von \f[ f(x) = c - xˆ2 \f].
+ * Das Verfahren wird nach n Iterationen abgebrochen.
+ *
+ * @param c nicht negative, reellwertige Zahl
+ * @param n gibt die Anzahl der Newton-Iterationen im numerischen Verfahren an
+ * @return die Quadratwurzel zur Zahl n
+ */
+double wurzel( double c, unsigned int n = 20 ) {
+  // …
+}
 ```
 
 ## Iteration und Rekursion
@@ -549,6 +604,73 @@ unsigned int ggT( unsigned int a, unsigned int b ) {
 }
 ```
 
+**Die Türme von Hanoi**
+```
+        ++              ++              ++
+        ||              ||              ||
+      +----+            ||              ||
+      +----+            ||              ||
+    +--------+          ||              ||
+    +--------+          ||              ||
+  +------------+        ||              ||
+  +------------+        ||              ||
++------------------------------------------------+
+|       1.              2.              3.       |
++------------------------------------------------+
+```
+Ziel ist es, alle Scheiben vom 1. auf den 3. Stapel zu bewegen. Dabei darf jedoch nur eine Scheibe gleichzeitig bewegt werden und es darf keine größere Scheibe auf einer kleineren liegen.
+
+Idee zur rekursiven Lösung:
+* Alle Scheiben bis auf eine werden auf 2. (dem Hilfsstapel) gelegt
+* Die letzte Scheibe wird auf 3. (dem Zielstapel) abgelegt
+* Die restlichen Schreiben müssen von 2. auf 3. geschoben werden
+
+**Umsetzung in C++**
+```c++
+#include <iostream>
+
+// Ausgabe der Züge
+void ziehe( int von, int nach ) {
+    static int zuege = 0;
+     zuege++;
+     std::cout << "Zug " << zuege << " von " << von << " nach " << nach << "\n";
+}
+
+/**
+ * Löst das Türme von Hanoi Problem mit n Scheiben
+ *
+ * Die Funktion gibt die Züge für die Lösung mit n
+ * Scheiben auf dem Bildschirm aus, nutzt dafür die Funktion ziehe zur formatierten Ausgabe.
+ * Die Funktion arbeitet Rekursiv.
+ *
+ * @param n Anzahl der Schieben die zu ziehen sind
+ * @param von Der Stapel von dem gezogen wird
+ * @param nach Der Stapel auf den gezogen werden soll
+ * @param hilf Der Stapel, der als Hilfsstapel verwendet werden soll.
+ */
+void loeseHanoi(int n, int von, int nach, int hilf ) {
+  if( n == 1 ) {
+    // Löse den Trivialfall → Eine Scheibe
+    ziehe( von, nach );
+  } else {
+    // Lege alle Scheiben bis auf eine auf den Hilfsstapel
+    loeseHanoi( n - 1, von, hilf, nach );
+    // Lege diese Scheibe auf den Zielstapel
+    // loeseHanoi( 1, von, nach, hilf ); bzw.
+    ziehe( von, nach );
+    // Lege alle anderen Schreiben vom Hilfsstapel auf den Zielstapel
+    loeseHanoi( n - 1, hilf, nach, von );
+
+  }
+}
+
+int main() {
+  int N;
+  std::cin >> N;
+  loeseHanoi( N, 1, 3, 2 );
+}
+```
+
 ### Rekursion ←→ Iteration
 ```c++
 unsigned int multipliziere( unsigned int a, unsigned int b ) {
@@ -608,3 +730,55 @@ constexpr int function(int c);  // deklariert Funktion, die zur Compilezeit ausg
 
 **Gegenseitige Rekursion**
 * Zwei Funktionen, die sich gegenseitig aufrufen
+
+## Felder (ohne Raps)
+* Zusammenfassen vom mehreren Variablen (gleicher Typ) zu einem Feld bzw. *Array*, *Vektor*, *Liste*, etc…
+* Entsprechende Bibliotheken benötigt: `vector`, `array`, `string`
+
+**Felder**
+* Der Datentyp und die Größe stehen zur Compilezeit fest
+```c++
+std::array< int, 10 > feld;
+std::array< int, 10 > feld {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+std::array< int, 10 > feld = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+                            // deklariert das Feld feld, vom Typ int mit 10 Elementen
+int feld[10] = {…}          // veraltet
+
+int n = 3;
+std::cout << feld[n];       // Ausgabe von dem Element an Stelle 3
+int i = 7;
+feld[n] = i;                // Das Element an Stelle 3 überschreiben  
+std::cout << feld.size();   // Größe des Feldes asugeben
+```
+
+* Mehr mehrdimensionale Felder sind auch möglich: `int feld[y][x];`
+* Schachteln von Feldern ist möglich
+  * String-Feld: `std::vector< std::string > text;`
+
+**Dynamische Felder**
+* Größe bleibt während der Laufzeit veränderlich
+```c++
+std::vector< int > prim;  // deklariert leeres Feld vom Typ int
+prim[0] = 2;              // setzt das 0. Element auf 2
+prim.back();              // liefert das letzte Elemement
+prim.push.back(3);        // fügt 3 an das Ende es Vektors an
+prim.pop.back();          // entfernt das letzte Element
+std::cout << prim.at(n);  // liefert das n-te Element
+prim.clear();             // leert das Felt *erntet es :P*
+```
+
+**Textfelder bzw. Zeichenketten**
+```c++
+std::string text;     // Feld aus Bruchstaben
+text = "Hallo Welt!";
+std::cout << text[0]; // liefert "H"
+text.length();        // liefert Länge des Feldes
+```
+
+**Durchlaufen von Feldern**
+* Eigener Datentyp für Größen: `size_t`
+```c++
+for( size_t = 0; i < text.length(); ++i ) {
+  std::cout << "Der Buchstabe an Stelle " << i << " lautet " << text[i] << "\n";
+}
+``
