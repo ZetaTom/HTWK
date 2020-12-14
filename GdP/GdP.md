@@ -732,39 +732,71 @@ constexpr int function(int c);  // deklariert Funktion, die zur Compilezeit ausg
 * Zwei Funktionen, die sich gegenseitig aufrufen
 
 ## Felder (ohne Raps)
-* Zusammenfassen vom mehreren Variablen (gleicher Typ) zu einem Feld bzw. *Array*, *Vektor*, *Liste*, etc…
+* Zusammenfassen vom mehreren Objekten (gleichen Typs) zu einem Feld bzw. *Array*, *Vektor*, *Liste*, etc…
+* Einträge sind in der Regel indizierbar
 * Entsprechende Bibliotheken benötigt: `vector`, `array`, `string`
 
-**Felder**
+**Felder fester Länge**
 * Der Datentyp und die Größe stehen zur Compilezeit fest
+* Deklaration mit Template
+  * Möglichkeit, Datenstrukturen für viele Typen auf einmal zu definieren
+  * Namen und Templateparamter als Argumente
+  * *Diese müssen zur Compilezeit feststehen*
+
+### Einführung in die Welt der Felder
 ```c++
-std::array< int, 10 > feld;
-std::array< int, 10 > feld {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+std::array< int, 10 >       feld;
+Datentyp  Templateparameter Variablenname
+          Inhaltstyp, Größe
+                            //definiert ein statisches Feld der Länge 3
 std::array< int, 10 > feld = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
                             // deklariert das Feld feld, vom Typ int mit 10 Elementen
 int feld[10] = {…}          // veraltet
 
 int n = 3;
-std::cout << feld[n];       // Ausgabe von dem Element an Stelle 3
+std::cout << feld.at(n);    // Ausgabe von dem Element an Stelle 3
+                            // Prüft, ob der Index gültig ist
+std::cout << feld[n];       // Selbiges, ohne Test → schneller
+
 int i = 7;
-feld[n] = i;                // Das Element an Stelle 3 überschreiben  
+feld.at(i) = 41;            // Das Element an Stelle 3 überschreiben
+feld[i] = 42;
 std::cout << feld.size();   // Größe des Feldes asugeben
 ```
 
-* Mehr mehrdimensionale Felder sind auch möglich: `int feld[y][x];`
-* Schachteln von Feldern ist möglich
-  * String-Feld: `std::vector< std::string > text;`
-
-**Dynamische Felder**
+**Felder dynamischer Länge**
 * Größe bleibt während der Laufzeit veränderlich
+  * Größe muss nicht vorher festgelegt werden
+  * Zeilen in Matrizen müssen nicht gleich lang sein
+  * Prüfung auf Größe in Laufzeit kostet Zeit
+  * Zusätzlicher Speicher für Länge → für keine Felder ineffizient
+
 ```c++
-std::vector< int > prim;  // deklariert leeres Feld vom Typ int
-prim[0] = 2;              // setzt das 0. Element auf 2
-prim.back();              // liefert das letzte Elemement
-prim.push.back(3);        // fügt 3 an das Ende es Vektors an
-prim.pop.back();          // entfernt das letzte Element
+std::vector< int > leer;        // deklariert leeres Feld vom Typ int
+std::vector< int > ehn(N);      // deklariert Vektor der Länge N vom Typ int
+std::vector< int > zuv(N, 42);  // deklariert Vektor der Länge N und setzt alle Werte auf 42
+std::vector< int > prim( {6, 3, 8, 7, 11} );
+                          // deklariert Feld prim und weist Werte zu
+
+prim.at(0) = 2;     // setzt das 0. Element auf 2
+prim[2] = 5;
+prim.pop.back();    // !entfernt das letzte Element
+prim.push.back(3);  // !fügt 3 an das Ende es Vektors an
+                    // Führt zu unnötigen Kopieroperationen wenn Kapazität überschritten
+                    // Speicher nach Feld belegt → neuen Speicher anfordern
+                    // Wenn möglich immer mehr reservieren bzw. statischs Feld nutzen
+
 std::cout << prim.at(n);  // liefert das n-te Element
-prim.clear();             // leert das Felt *erntet es :P*
+prim.front();             // liefert das erste Element
+prim.back();              // liefert das letzte Elemement
+
+prim.empty();             // test, ob prim Werte enthält
+prim.clear();             // !leert das Feld *erntet es :P*
+
+prim.resize();            // !Ändern der Größe des Feldes
+prim.size();              // liefert Größe des Feldes
+prim.capacity();          // liefert maximale Größe, ohne neuen Speicher anzufragen
+prim.reserve( size_t N);  // !Allokation von Speicher, ohne die Größe zu ändern
 ```
 
 **Textfelder bzw. Zeichenketten**
@@ -781,4 +813,82 @@ text.length();        // liefert Länge des Feldes
 for( size_t = 0; i < text.length(); ++i ) {
   std::cout << "Der Buchstabe an Stelle " << i << " lautet " << text[i] << "\n";
 }
+```
+
+**Objekte und ihre Eigenschaften**
+* Objekte haben Funktionen, mit denen der Zustand dieser angefragt werden kann
+* in C++ ist der Operator `.`
+  * `feld.size()` ruft die Funktion `size()` auf, des Objektes `feld` auf
+
+
+### Anwendung von Feldern
+**Speicherung von 1D-Feldern**
+* Felder werden im Speicher als Elemente hintereinander gespeichert
+* `std::array< int, 5 > x` wird als `x0|x1|x2|x3|x4` gespeichert
+
+**Speicherung von 2D-Feldern**
+* Matrizen oder Bilder
+* Speicherung von Feldern, in Feldern
+  * Direkte Indizierung möglich → Mathe
+  * Durchlaufen aller Einträge → verschachtelte Schleifen
+  * Vektoren: jede Zeile muss in der Länge gesetzt werden
+* Alternativ auch linearisiert
+  * Einfaches Durchlaufen aller Werte
+  * Indizes müssen *manuell* berechnet werden
+  * Nachbarn nicht eindeutig
+  * separate Größenangaben
+
+```c++
+// Felder von Feldern
+array<array<double, N>, M> A; // Deklaration eines 2D-Feldes
+A[3][1] = 5;                  // Zuweisung
+A.at(3).at(1) = 5;
+
+array<array<double, 3>, 4> A = {
+  { 8.0, 20.3, 14.2 },
+  { 7.6, 18.3, 12.2 },
+  { 5.3, 20.1, 12.2 },
+  { 1.2, 1.0,   1.1 }
+};
+
+// 2D als 1D-Feld → Linearisierung
+array<double, M*N> A;
+A[ 3*M + 1 ] = 5.0;
+A.at( 3*M + 1 ) = 5.0;
+
+// Vektor → Jede Zeile muss sepatat in der Größe gesetzt werden
+std::vector< std::vector< double > > feld2d( 3, std::vector< double >( 4 ) );
+// ist äquivalent zu:
+std::vector< std::vector< double > > feld2d( 3 );
+for( size_t zeile = 0; zeile < 3; ++zeile ) {
+  feld2d.at( zeile ) = std::vector< double >( 4 );
+  }
+// ist äquivalent zu:
+std::vector< std::vector< double > > feld2d( 3 );
+for( size_t zeile = 0; zeile < 3; ++zeile ) {
+  feld2d.at( zeile ).resize( 4 );
+}
+
+
+// Jede Zeile kann unterschiedliche Größe haben
+// Dreiecksmatrix ermöglicht
+    00
+A=  01  11
+    20  21  20
+std::vector< std::vector< double > > A( 3 );
+for( size_t zeile = 0; zeile < 3; ++zeile ) {
+  A.at( zeile ).resize( zeile + 1 );
+}
+```
+
+*PPM-Dateiformat*
+```
+P1
+# comment
+5 5
+0 1 0 0 0 →  █
+0 1 0 1 0 →  █ █
+0 1 0 0 0 →  █
+0 1 1 1 1 →  ████
+0 0 0 0 0 → 
 ```
