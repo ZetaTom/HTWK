@@ -3,16 +3,17 @@
 
 
 // Konstruktor
-Fahrrad::Fahrrad(int ikettenblatt, int irizel, double iraddurchmesser) {
+// i steht für Input
+Fahrrad::Fahrrad(int ikettenblatt, int iritzel, double iraddurchmesser) {
 	kettenblatt = ikettenblatt;
-	rizel = irizel;
+	ritzel = iritzel;
 	raddurchmesser = iraddurchmesser;
 };
 
-// Standardonstruktor, wird bei Aufruf ohne Parameter benutzt
+// Standardkonstruktor, wird bei Aufruf ohne Parameter benutzt
 Fahrrad::Fahrrad() {
 	kettenblatt = 40;
-	rizel = 13;
+	ritzel = 13;
 	raddurchmesser = 0.65;
 }
 
@@ -28,7 +29,7 @@ double Fahrrad::bestimmeEntfaltung() {
 }
 
 double Fahrrad::bestimmeGeschwindigkeit(const int& TiM) {
-	double T = TiM * 60;
-	double v = T * bestimmeEntfaltung() / 1000;
+	double T = TiM * 60;							// Tim → T in 1/min; Umrechnung in s
+	double v = T * bestimmeEntfaltung() / 1000;		// v = T * e; Umrechnung in km/h
 	return v;
 }
