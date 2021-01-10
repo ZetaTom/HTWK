@@ -17,20 +17,20 @@
 ### Compiler
 GNU Compiler
 * `g++ -Wall -std=c++14 programm.cpp` bzw. `g++ -Wall -std=c++14 programm.cpp -c`
-	* Kompilieren bzw. *nur* kompilieren → Erzeugt Objektdatei programm.o
+  * Kompilieren bzw. *nur* kompilieren → Erzeugt Objektdatei programm.o
 * `g++ -Wall -std=c++14 -o programm programm.o`
-	* Erzeugt ausführbare Datei programm aus programm.o
+  * Erzeugt ausführbare Datei programm aus programm.o
 * Zusammen: `g++ -Wall -std=c++14 -o programm programm.cpp`
-	* `-Wall` aktiviert alle Fehlermeldungen und Warnungen
-	* für clang++: `-Weverything`
-	
+  * `-Wall` aktiviert alle Fehlermeldungen und Warnungen
+  * für clang++: `-Weverything`
+    
 ### Hallo Welt und Programmstruktur
 ```c++
 #include <iostream>
 
 int main() {
-	std::cout << "Hallo Welt!" << std::endl;
-	return 0;
+    std::cout << "Hallo Welt!" << std::endl;
+    return 0;
 }
 ```
 
@@ -41,7 +41,7 @@ Strukturen
 * `int main() {` ist der Einstiegspunkt für das Programm
 * `{ … }` bildet den Funktionsrumpf bzw. Block
 * `return 0;` Springt aus ihrem Programmteil heraus und beendet diesen; Rückgabe des Wertes `0`
-	* optionale Rückmeldung an das System, dass die Ausführung erfolgreich war
+  * optionale Rückmeldung an das System, dass die Ausführung erfolgreich war
 
 ### Symbole, Schlüsselwörter, Variablen und Bezeichner
 Anhand der **Symbole** prüft der Rechner die formale Korrektheit eines Programms und setzt es in Maschinensprache um.
@@ -56,9 +56,9 @@ Anhand der **Symbole** prüft der Rechner die formale Korrektheit eines Programm
 
 **Variablen, Bezeichner und Literale**
 ```c++
-	int			a	=		3;
-//	Datentyp	Bezeichner	Literal → Variable
-//				L-Wert		R-Wert
+    int         a   =       3;
+//  Datentyp    Bezeichner  Literal → Variable
+//              L-Wert      R-Wert
 ```
 *Variablen* sind Repräsentanten für Speicherbereiche.
 *Literale* sind konstante Größen in einem Programm. Sie beschreiben die konkrete Werte für einen Datentyp.
@@ -75,29 +75,29 @@ Bezeichner| Definiert als
 
 **Deklaration und Initialisierung**
 ```c++
-double d;				// deklariert aber nicht initialiert
-double e = 1.0;	 		// reserviert Speicher und initialisiert ihn mit dem Wert 1
+double d;               // deklariert aber nicht initialiert
+double e = 1.0;         // reserviert Speicher und initialisiert ihn mit dem Wert 1
 double f( 1.0 );
-double g{ 1.0 };		// deklariert und initialisert, Prüfung auf Richtigkeit beim kompilieren
-double i = double();	// reserviert Speicher und initialisiert ihn mit dem Wert 0
-double j{};				// reserviert Speicher und initialisiert ihn mit dem Wert 0
+double g{ 1.0 };        // deklariert und initialisert, Prüfung auf Richtigkeit beim kompilieren
+double i = double();    // reserviert Speicher und initialisiert ihn mit dem Wert 0
+double j{};             // reserviert Speicher und initialisiert ihn mit dem Wert 0
 ```
 
 **Konstanten**
 ```c++
-double d{ 1.0 };				// defiert d und setzt den Wert von d auf 1.0
-								// d kann im Programm verändert werden
-contexpr double e{ 0.5/3.1};	// e ist ein konstanter Ausdruck und nach Definition nicht veränderbar
-const double f{ 0.5/3.1 };		// f ist eine Konstante, die nach dem kompilieren konstant ist
-constexpr double g{ f };		// in Ordnung, da ableitbar
+double d{ 1.0 };                // defiert d und setzt den Wert von d auf 1.0
+                                // d kann im Programm verändert werden
+contexpr double e{ 0.5/3.1};    // e ist ein konstanter Ausdruck und nach Definition nicht veränderbar
+const double f{ 0.5/3.1 };      // f ist eine Konstante, die nach dem kompilieren konstant ist
+constexpr double g{ f };        // in Ordnung, da ableitbar
 ```
 
 **Statische Variablen**
 ```c++
 void f(int a, int b) {
-	static int n = 0;	// beim ersten Funktionsdurchlauf: definiert und setzt n auf 0
-	// …				// bei folgenden Aufrufen: wird n vom vorhergehenden Aufruf verwendet
-}					 	// für Rekursion nützlich (siehe Hanoi)
+    static int n = 0;   // beim ersten Funktionsdurchlauf: definiert und setzt n auf 0
+    // …                // bei folgenden Aufrufen: wird n vom vorhergehenden Aufruf verwendet
+}                       // für Rekursion nützlich (siehe Hanoi)
 ```
 
 ### (Mathematische) Operatoren
@@ -147,10 +147,10 @@ c++|Beispiel|Bedeutung
 **char**
 * Zeichen, Ziffer, Steuerzeichen
 * Intern als ASCII-Nummer gespeichert
-	* Zuweisung als `i='x'` bzw. `i=64`
-	* Ein-/Ausgabe immer als Zeichen
-	* Rechnen und vergleichen möglich `'a' < 'b'`
-	
+  * Zuweisung als `i='x'` bzw. `i=64`
+  * Ein-/Ausgabe immer als Zeichen
+  * Rechnen und vergleichen möglich `'a' < 'b'`
+    
 **Zahlen**
 Typ|Bits|Maximum|Genauigkeit
 ---|----|-------|-----------
@@ -166,49 +166,49 @@ double|64|±2.2E − 308 … ± 1.8E + 308|15 Stellen
 long double|80|±3.4E − 4932 … ± 1.2E + 4932|18 Stellen
 
 * Suffixe
-	* geben den Datentyp an
-	* `42` int
-	* `42u` unsigned int
-	* `42l` long int
-	* `42lu` long unsigned int
-	* `42llu` long long unsigned int
+  * geben den Datentyp an
+  * `42` int
+  * `42u` unsigned int
+  * `42l` long int
+  * `42lu` long unsigned int
+  * `42llu` long long unsigned int
 
 * Präfixe
-	* `int a{ 0x20 };` Hexadezimal
-	* `int c{ 020 };` Oktal
-	* `unsigned int e{ 0b01100101 };` Binär
+  * `int a{ 0x20 };` Hexadezimal
+  * `int c{ 020 };` Oktal
+  * `unsigned int e{ 0b01100101 };` Binär
 
 * Infixe
-	* `double d{ 4e2 };` 400 = 4 ∗ 10^2
-	* `double d{ 4E2 };` 400 = 4 ∗ 10^2
+  * `double d{ 4e2 };` 400 = 4 ∗ 10^2
+  * `double d{ 4E2 };` 400 = 4 ∗ 10^2
 
 **Enumerationen**
 * Enumerationen (enum) sind selbstdefinierte Datentypen, die eine abzählbare Ausprägung von Werten besitzen
 * Somit kann garantiert werden, dass eine Variable keinen falschen Wert annehmen kann
 ```c++
-enum class Ampelfarbe { Rot, Gruen };	// Neuer Datentyp wird definiert
-Ampelfarbe ampel1 = Ampelfarbe::Rot;	// Variablen können nur Rot und Gruen annehmen
+enum class Ampelfarbe { Rot, Gruen };   // Neuer Datentyp wird definiert
+Ampelfarbe ampel1 = Ampelfarbe::Rot;    // Variablen können nur Rot und Gruen annehmen
 if( anfrageVonFussgaenger ) {
-	ampel1 = Ampelfarbe::Gruen;
+    ampel1 = Ampelfarbe::Gruen;
 }
 ```
 * Interne Speicherung als Ganzzahl
 ```c++
-enum class Ampelfarbe { Rot = 0, Gruen = 1};	// Explizite Zuweisung
+enum class Ampelfarbe { Rot = 0, Gruen = 1};    // Explizite Zuweisung
 ```
 
 ###Typumwandlungen
 * Umwandlung von Typen kann zu Genauigkeitsverlusten bis hin zum Informationsverlust führen. Ursachen dafür sind:
-	* Genauigkeitverlust
-	* Überschreitung des Wertebereiches
-	* Rundung
-	* Vorzeichenverlust
+  * Genauigkeitverlust
+  * Überschreitung des Wertebereiches
+  * Rundung
+  * Vorzeichenverlust
 * Jeder R-Wert des Typs char, signed char, unsigned char, short int und unsigned short int kann ohne Informationsverlust in einen int-Wert umgewandelt werden (engl. *integral promotion*)
 * Integrale Typen sind untereinander konvertierbar. Die Fälle, die nicht zu den obigen gehören werden *integral conversion* genannt. Sonderfälle sind die Typen bool und enum
 * Automatische Umwandlung wird unterstützt
 ```c++
 float x {};
-float comp = ( x == 0.0 );	// comp enthält den Wert 1.0
+float comp = ( x == 0.0 );  // comp enthält den Wert 1.0
 ```
 
 **Manuelle Umwandlung**
@@ -231,56 +231,56 @@ int i = int(d);
 
 ### Ein- und Ausgabe
 * Ausgabe aka. `printf`
-	* Enthalten in `iostream`
-	* `std::cout << var` bzw. `std::cout << "Hallo"`
-	* Verkettung möglich `std::cout << "Wert von n: " << n "MeV"`
-	* neue Zeilen
-		 `std::endl` fügt programmabhängig das Zeilenende ein und wartet, bis Ausgabe beendet
-		 `"\n"` Zeilenende unter *NIX, inkompatibel mit z.B. WIN
-		 `std::flush` Wartet bis die Ausgabe beendet ist; Erzwingt die Ausgabe
+  * Enthalten in `iostream`
+  * `std::cout << var` bzw. `std::cout << "Hallo"`
+  * Verkettung möglich `std::cout << "Wert von n: " << n "MeV"`
+  * neue Zeilen
+         `std::endl` fügt programmabhängig das Zeilenende ein und wartet, bis Ausgabe beendet
+         `"\n"` Zeilenende unter *NIX, inkompatibel mit z.B. WIN
+         `std::flush` Wartet bis die Ausgabe beendet ist; Erzwingt die Ausgabe
 * Formatierung von Zahlen
-	* Führende Zeichen bzw. Leerzeichen Einfügen
-		 Bestandteil von `iomanip`
-		 `std::cout << std : : setw ( 4 ) << 1 ;` gibt `	 1` aus
-		 `std::cout << std::setfill ('x') << std::setw (10) << 42` gibt `xxxxxxxx42` aus
-	* Pluszeichen ausgeben: `std::cout << std::showpos`
-	* Wissenschaftliche Schreibweise: `std::cout << std::scientific`
-	* Ausgabegenauigkeit festlegen
-		 `std::cout << std::setprecision(5) << 3.14159` gibt `3.1416` aus
-		 `std::cout << std::setprecision(9) << 3.14159` gibt auch `3.1416` aus
-		 `std::cout << std::fixed << std::setprecision(9) << 3.14159` gibt `3.141590000` aus
+  * Führende Zeichen bzw. Leerzeichen Einfügen
+         Bestandteil von `iomanip`
+         `std::cout << std : : setw ( 4 ) << 1 ;` gibt `     1` aus
+         `std::cout << std::setfill ('x') << std::setw (10) << 42` gibt `xxxxxxxx42` aus
+  * Pluszeichen ausgeben: `std::cout << std::showpos`
+  * Wissenschaftliche Schreibweise: `std::cout << std::scientific`
+  * Ausgabegenauigkeit festlegen
+         `std::cout << std::setprecision(5) << 3.14159` gibt `3.1416` aus
+         `std::cout << std::setprecision(9) << 3.14159` gibt auch `3.1416` aus
+         `std::cout << std::fixed << std::setprecision(9) << 3.14159` gibt `3.141590000` aus
 * Eingabe lesen
-	* Enthalten in `iostream`
-	* Eingabe von *Worten* möglich. D.h. Bis zu `\n` oder `␣`
-	* `std::cin >> var`
-	* Einlesen einer Zeile möglich mit: `std::getline(std::cin, var)`
-		 also bis LF lesen
-	
+  * Enthalten in `iostream`
+  * Eingabe von *Worten* möglich. D.h. Bis zu `\n` oder `␣`
+  * `std::cin >> var`
+  * Einlesen einer Zeile möglich mit: `std::getline(std::cin, var)`
+         also bis LF lesen
+    
 
 ### Dateien lesen und Schreiben
 * Der Dateityp `std::ofstream` *Output-Filesystem* erlaubt es, in Dateien zu schreiben
 * Beim verlassen des Gültigkeitsbereichs wird die Datei automatisch geschlossen
 ```c++
 int main() {
-	std::ofstream fileOut("test.txt")	// Anlegen einer Variable mit Dateinamen als Argument
-										// → öffnen der Datei
-	if( fileOut ) {						// falls die Datei schreibbar ist
-	fileOut << "Hallo Welt"				// schreibt "Hallo Welt" in die Datei
-	}
-}										// Ende des Blockes, fileOut verliert Gültigkeit
-										// Resource wird freigegeben; Datei geschlossen
+    std::ofstream fileOut("test.txt")   // Anlegen einer Variable mit Dateinamen als Argument
+                                        // → öffnen der Datei
+    if( fileOut ) {                     // falls die Datei schreibbar ist
+    fileOut << "Hallo Welt"             // schreibt "Hallo Welt" in die Datei
+    }
+}                                       // Ende des Blockes, fileOut verliert Gültigkeit
+                                        // Resource wird freigegeben; Datei geschlossen
 ```
 * Einlesen einer gesamten Datei
 ```c++
 std::string leseGanzeDatei2(const std::string& dateiname) {
-	std::ifstream ifs(dateiname);
-	std::string text;
-	while(ifs) {
-		std::string temp;
-		std::getline(ifs, temp);
-		text.append(temp);
-	}
-	return text;
+    std::ifstream ifs(dateiname);
+    std::string text;
+    while(ifs) {
+        std::string temp;
+        std::getline(ifs, temp);
+        text.append(temp);
+    }
+    return text;
 }
 
 // oder
@@ -288,87 +288,87 @@ std::string leseGanzeDatei2(const std::string& dateiname) {
 #include <streambuf>
 #include <fstream>
 std::string leseGanzeDatei(const std::string& dateiname) {
-	std::ifstream ifs( dateiname );
-	return std::string(	(std::istreambuf_iterator<char>(ifs)),
-						(std::istreambuf_iterator<char>()));
+    std::ifstream ifs( dateiname );
+    return std::string( (std::istreambuf_iterator<char>(ifs)),
+                        (std::istreambuf_iterator<char>()));
 }
 ```
 
 ### Namensräume
 * `std` ist der Namensraum der Standardbibliothek
 * Namensräume werden mit `::` von Variablen abgetrennt
-	* `using namespace std;` setzt `std` als Standard *nicht empfohlen*
-	* `using std::cout;` ermöglicht partielle Nutzung
-	* `std::cout << a` → `cout << a`
+  * `using namespace std;` setzt `std` als Standard *nicht empfohlen*
+  * `using std::cout;` ermöglicht partielle Nutzung
+  * `std::cout << a` → `cout << a`
 * Eigene Namensräume erstellen
 ```c++
-namespace htwk {				// Deklaration eines eigenen Namensraums
-	const int dozenten{ 1 };	// Variable im Namensraum
-	const int studenten{ 2 };
-	namespace info {			// Verschachtelung möglich
-	const int a{ 3 };
-	const int b{ 4 };
-	}
+namespace htwk {                // Deklaration eines eigenen Namensraums
+    const int dozenten{ 1 };    // Variable im Namensraum
+    const int studenten{ 2 };
+    namespace info {            // Verschachtelung möglich
+    const int a{ 3 };
+    const int b{ 4 };
+    }
 }
 
 int main() {
-	int dozenten = htwk::dozenten;
-	int a = htwk::info::a;
+    int dozenten = htwk::dozenten;
+    int a = htwk::info::a;
 }
 ```
 
 ### Globale Variablen (sind zu vermeiden)
 ```c++
-int a = 5;		// Deklaration einer globalen Variable
+int a = 5;      // Deklaration einer globalen Variable
 int main() {
-	// …
-	int b = a;	// Die Variable ist überall gültig
-	// …		// und kann nicht neu definiert werden
+    // …  
+    int b = a;  // Die Variable ist überall gültig
+    // …        // und kann nicht neu definiert werden
 }
 ```
 
 ### if, else und der geschleifte Spaß
 * Fallunterscheidung (wahr oder falsch)
 ```c++
-if( … ) {	// wenn …
-	// …	// dann …
-} else {	// sonst …
-	// …	// optional
+if( … ) { // wenn …
+    // …    // dann …
+} else {    // sonst …
+    // …    // optional
 }
 ```
 * Fallunterscheidung
 ```c++
-switch( … ) {			// Unterscheidung anhand von …
-	case 1:				// Fall, dass Wert == 1
-	// …				// dann
-	break;				// beendet Ausführung des switch-Blocks
-	case 'b':			// zulässig char
-	// …
-	break;
-	case farbe::blau:	// zulässig enum
-	case farbe::gelb:	// wenn einer übereinstimmt
-	case farbe::cyan:	// dann
-	// …
-	break;
-	default:			// falls kein anderer Fall eintritt
-	// …
+switch( … ) {         // Unterscheidung anhand von …
+    case 1:             // Fall, dass Wert == 1
+    // …                // dann
+    break;              // beendet Ausführung des switch-Blocks
+    case 'b':           // zulässig char
+    // …  
+    break;
+    case farbe::blau:   // zulässig enum
+    case farbe::gelb:   // wenn einer übereinstimmt
+    case farbe::cyan:   // dann
+    // …  
+    break;
+    default:            // falls kein anderer Fall eintritt
+    // …  
 }
 ```
 * Schleifen
-	* `break;` Sofortiger Abbruch der nächstäußeren switch/while/do-while/for-Anweisung
-	* `continue;` Abbruch der aktuellen und sofortiger Start des nächsten Zykels einer while/do-while/for-Anweisung
+  * `break;` Sofortiger Abbruch der nächstäußeren switch/while/do-while/for-Anweisung
+  * `continue;` Abbruch der aktuellen und sofortiger Start des nächsten Zykels einer while/do-while/for-Anweisung
 ```c++
-while( … ) {	// Kopfgesteuerte Schleife
-	// …		// Solange …
-}				// tue …
+while( … ) {  // Kopfgesteuerte Schleife
+    // …        // Solange …
+}               // tue …
 
-do{				// Fußgesteuerte Schleife
-	// …		// wird mindestens 1x ausgeführt
+do{             // Fußgesteuerte Schleife
+    // …        // wird mindestens 1x ausgeführt
 } while( … );
 
 // Zählschleife
 for (int i; i < 100; ++i) {
-	// …
+    // …  
 }
 ```
 
@@ -380,65 +380,65 @@ Wir kennen verschiedene *Unterprogramme* bereits:
 
 Unterscheidung in
 * Prozeduren (`void`)
-	* Unterprogramme, die keine Werte zurückgeben
+  * Unterprogramme, die keine Werte zurückgeben
 * Funktionen (`int`, `double`, etc.)
-	* Unterprogramme, die Werte zurückgeben
-	* dienen zur Strukturierung des Programms
+  * Unterprogramme, die Werte zurückgeben
+  * dienen zur Strukturierung des Programms
 
 * C++ unterscheidet, welche Funktion aufgerufen wird *nicht nur am Funktionsnamen* (wie C), *sondern auch am Datentyp*
 
 ### Aufbau einer Funktion
 **Prototyp der Funktion**
 ```c++
-double				sqrt			( double x	)
-Rückgabedatentyp	Funktionsname	 Parameter 
+double              sqrt            ( double x  )
+Rückgabedatentyp   Funktionsname    Parameter 
 ```
 
 * Rückgabedatentyp: der Typ, den die Funktion an den Aufrufer zurückgibt
-	* `void` → keine Rückgabe
+  * `void` → keine Rückgabe
 * Funktionsname: Name der Funktion, case sensitive
 * Argumentenliste: durch Komma getrennte Liste von Datentypen für die Argumente der Funktion
-	* optional mit Bezeichner
-	* kann auch leer sein
+  * optional mit Bezeichner
+  * kann auch leer sein
 
 ```c++
 #include <iostream>
 
-double Quadrat( double x);		// Deklaration einer Funktion, die einen double-Wert
-								// zurückgibt und einen als Eingabe nimmt (x)
-								// Prototyp der Funktion
-double Quadrat( double x) {		// Implementierung bzw. Definition
-	return x * x;
+double Quadrat( double x);      // Deklaration einer Funktion, die einen double-Wert
+                                // zurückgibt und einen als Eingabe nimmt (x)
+                                // Prototyp der Funktion
+double Quadrat( double x) {     // Implementierung bzw. Definition
+    return x * x;
 }
 
 int main() {
-	double x{ 3 };
-	double y = Quadrat( x );	// Funktionsaufruf
-	std::cout << x << "²" << "=" << y << std::endl;
+    double x{ 3 };
+    double y = Quadrat( x );    // Funktionsaufruf
+    std::cout << x << "²" << "=" << y << std::endl;
 }
 ```
 Die Variable `x` kommt zwei Mal vor. Sie ist wegen RAII nur in der jeweiligen Funktion bzw. dem Programmanschnitt definiert. So wird eine Kollision vermieden.
 
 **Funktionsdeklaration**
 ```c++
-int f();			// Funktion f mit leerer Argumentenliste
-int f(void);		// Selbiges
-int f(int, char);	// Funktion f mit zwei Parametern
-void f(int, char);	// Selbiges ohne Rückgabewert
+int f();            // Funktion f mit leerer Argumentenliste
+int f(void);        // Selbiges
+int f(int, char);   // Funktion f mit zwei Parametern
+void f(int, char);  // Selbiges ohne Rückgabewert
 ```
 
 **Funktionsdefinition**
 ```c++
 int zweiundvierzig() {
-	return 42;
+    return 42;
 }
 
 double lineareFnkt( double x, double m, double n ) {
-	return m * x + n;
+    return m * x + n;
 }
 
 void ausgabe( double zahl ) {
-	std::cout << "Die Zahl lautet: " << zahl << std::endl;
+    std::cout << "Die Zahl lautet: " << zahl << std::endl;
 }
 ```
 
@@ -449,10 +449,10 @@ float sqrt( float );
 double sqrt( double );
 long double sqrt( long double );
 
-auto a = sqrt( 2 );		// verwendet sqrt( int )
-auto b = sqrt( 2.0f );	// verwendet sqrt( float )
-auto c = sqrt( 2.0 );	// verwendet sqrt( double )
-auto d = sqrt( 2.0l );	// verwendet sqrt( long double )
+auto a = sqrt( 2 );     // verwendet sqrt( int )
+auto b = sqrt( 2.0f );  // verwendet sqrt( float )
+auto c = sqrt( 2.0 );   // verwendet sqrt( double )
+auto d = sqrt( 2.0l );  // verwendet sqrt( long double )
 ```
 
 ### Parameterübergabe
@@ -461,7 +461,7 @@ auto d = sqrt( 2.0l );	// verwendet sqrt( long double )
 * für kleine Datentypen geeignet → sonst hoher Speicher Aufwand
 ```c++
 int CallByValue( int a ) {
-	return a * 3;
+    return a * 3;
 }
 ```
 
@@ -472,7 +472,7 @@ int CallByValue( int a ) {
 * Speicheraufwand minimal
 ```c++
 int CallByConstReference( const int& a ) {
-	std::cout << a;
+    std::cout << a;
 }
 
 int b = 4;
@@ -486,7 +486,7 @@ CallByConstReference(b);
 * Speicheraufwand minimal
 ```c++
 long long CallByReference( long long& a ) {
-	a+= 3;
+    a+= 3;
 }
 
 long long b = 4;
@@ -499,11 +499,11 @@ CallByReference(b);
 * Festlegung der optionalen Parameter auf einen Standardwert
 ```c++
 int add(int a, int b = 0, int c = 0, int d = 0) {
-	return a + b + c + d;
+    return a + b + c + d;
 }
-int r1 = add(3);		// a = 3, b = 0, c = 0, d = 0
-int r2 = add(3, 4);		// a = 3, b = 4, c = 0, d = 0
-int r3 = add(3, 4, 5);	// a = 3, b = 4, c = 5, d = 0
+int r1 = add(3);        // a = 3, b = 0, c = 0, d = 0
+int r2 = add(3, 4);     // a = 3, b = 4, c = 0, d = 0
+int r3 = add(3, 4, 5);  // a = 3, b = 4, c = 5, d = 0
 ```
 
 * Wenn beliebig viele Parameter übergeben werden sollten: **varargs**
@@ -525,7 +525,7 @@ printf( "Hallo %d %d %d %d", 1, 2, 3, 4 );
  * @return die Quadratwurzel zur Zahl n
  */
 double wurzel( double c, unsigned int n = 20 ) {
-	// …
+    // …  
 }
 ```
 
@@ -545,9 +545,9 @@ double wurzel( double c, unsigned int n = 20 ) {
 
 **Text Segment**
 * Der ausführbare Code eines Programms
-	* meist nur lesbar
-	* selbstmodifizierender Code aber möglich
-	
+  * meist nur lesbar
+  * selbstmodifizierender Code aber möglich
+    
 **Global Segment**
 * Globale Variablen (*außerhalb* `main`) und feste Zeichenketten (*im Programm*)
 
@@ -555,13 +555,13 @@ double wurzel( double c, unsigned int n = 20 ) {
 * Speicherbereich, der zur Laufzeit den aktuellen Zustand speichert
 * Bei jedem Funktionsaufruf wird ein Segment auf den Stapel abgelegt
 * Jeder Eintag beinhaltet mindestens
-	* Aufrufparameter
-	* lokale Variablen
-	* Rückgabewerte
-	* Rücksprungadresse
+  * Aufrufparameter
+  * lokale Variablen
+  * Rückgabewerte
+  * Rücksprungadresse
 
 ```
-		 Oberes Stapelende
+         Oberes Stapelende
 +-----> +-----------------+ +----------+
 Stapel- |Lokale  Variablen|
 zeiger  +-----------------+  Aktueller
@@ -611,14 +611,14 @@ Jeder Aufruf einer Funktion hat ihren eignen Speicher und eigene Variablen auf d
 Eine Funktion ruft *sich selbst* auf
 ```c++
 int funktion( … ) {
-	if( Abbruchfall erreicht ) {			// Rekursionsanfang mit Abbruchbedingung
-	// Löse den einfachsten Fall			// (mehere möglich)
-	// Ergebnis zurückgeben
-	} else {								// Rekursionsschritt
-	// Teile das Problem in Teilprobleme
-	// rufe funktion( … ) auf
-	// Kombiniertes Ergebnis zurückgeben
-	}
+    if( Abbruchfall erreicht ) {            // Rekursionsanfang mit Abbruchbedingung
+    // Löse den einfachsten Fall           // (mehere möglich)
+    // Ergebnis zurückgeben
+    } else {                                // Rekursionsschritt
+    // Teile das Problem in Teilprobleme
+    // rufe funktion( … ) auf
+    // Kombiniertes Ergebnis zurückgeben
+    }
 ```
 
 **Der größte gemeinsame Teiler**
@@ -638,15 +638,15 @@ a, b ∈ ℕ
 ```
 ```c++
 unsigned int ggT( unsigned int a, unsigned int b ) {
-	if( a == b ) {
-	return a;
-	}
-	else if( a > b ) {
-	return ggT( b, a - b );
-	} else	// ( a < b )
-	{
-	return ggT( a, b - a );
-	}
+    if( a == b ) {
+    return a;
+    }
+    else if( a > b ) {
+    return ggT( b, a - b );
+    } else  // ( a < b )
+    {
+    return ggT( a, b - a );
+    }
 }
 ```
 
@@ -677,9 +677,9 @@ Idee zur rekursiven Lösung:
 
 // Ausgabe der Züge
 void ziehe( int von, int nach ) {
-	static int zuege = 0;
-	zuege++;
-	std::cout << "Zug " << zuege << " von " << von << " nach " << nach << "\n";
+    static int zuege = 0;
+    zuege++;
+    std::cout << "Zug " << zuege << " von " << von << " nach " << nach << "\n";
 }
 
 /**
@@ -695,70 +695,70 @@ void ziehe( int von, int nach ) {
  * @param hilf Der Stapel, der als Hilfsstapel verwendet werden soll.
  */
 void loeseHanoi(int n, int von, int nach, int hilf ) {
-	if( n == 1 ) {
-	// Löse den Trivialfall → Eine Scheibe
-	ziehe( von, nach );
-	} else {
-	// Lege alle Scheiben bis auf eine auf den Hilfsstapel
-	loeseHanoi( n - 1, von, hilf, nach );
-	// Lege diese Scheibe auf den Zielstapel
-	// loeseHanoi( 1, von, nach, hilf ); bzw.
-	ziehe( von, nach );
-	// Lege alle anderen Schreiben vom Hilfsstapel auf den Zielstapel
-	loeseHanoi( n - 1, hilf, nach, von );
+    if( n == 1 ) {
+    // Löse den Trivialfall → Eine Scheibe
+    ziehe( von, nach );
+    } else {
+    // Lege alle Scheiben bis auf eine auf den Hilfsstapel
+    loeseHanoi( n - 1, von, hilf, nach );
+    // Lege diese Scheibe auf den Zielstapel
+    // loeseHanoi( 1, von, nach, hilf ); bzw.
+    ziehe( von, nach );
+    // Lege alle anderen Schreiben vom Hilfsstapel auf den Zielstapel
+    loeseHanoi( n - 1, hilf, nach, von );
 
-	}
+    }
 }
 
 int main() {
-	int N;
-	std::cin >> N;
-	loeseHanoi( N, 1, 3, 2 );
+    int N;
+    std::cin >> N;
+    loeseHanoi( N, 1, 3, 2 );
 }
 ```
 
 ### Rekursion ←→ Iteration
 ```c++
 unsigned int multipliziere( unsigned int a, unsigned int b ) {
-	unsigned int ergebnis = 0;
-	for( unsigned int i = 1; i <= b; ++i ) {
-	ergebnis = ergebnis + a;
-	}
-	return ergebnis;
+    unsigned int ergebnis = 0;
+    for( unsigned int i = 1; i <= b; ++i ) {
+    ergebnis = ergebnis + a;
+    }
+    return ergebnis;
 }
 
 unsigned int multipliziere( unsigned int a, unsigned int b ) {
-	unsigned int ergebnis = 0;
-	while( b > 0 ) {
-	ergebnis = ergebnis + a; --b;
-	}
-	return ergebnis;
+    unsigned int ergebnis = 0;
+    while( b > 0 ) {
+    ergebnis = ergebnis + a; --b;
+    }
+    return ergebnis;
 }
 
 unsigned int multipliziere( unsigned int a, unsigned int b ) {
-	if( b == 0 ) {return 0; }
-	else { return multipliziere( a, b - 1 ) + a; }
+    if( b == 0 ) {return 0; }
+    else { return multipliziere( a, b - 1 ) + a; }
 }
 ```
 
 ### Rekursion zur Compilezeit
 * Der Compiler kann Rekursion (aber keine Schleifen) auswerten.
 * Festlegen der Werte als `constexpr` → Steht zur Compilezeit fest
-	* **ALLE** Parameter müssen zur Compilezeit feststehen
+  * **ALLE** Parameter müssen zur Compilezeit feststehen
 ```c++
-constexpr int a = 10;			// a = 10 ist konstant
-constexpr int c = 3 * a;		// c = 30 ist konstant
+constexpr int a = 10;           // a = 10 ist konstant
+constexpr int c = 3 * a;        // c = 30 ist konstant
 
-constexpr int function(int c);	// deklariert Funktion, die zur Compilezeit ausgewertet werden kann.
+constexpr int function(int c);  // deklariert Funktion, die zur Compilezeit ausgewertet werden kann.
 ```
 
 ### Definitionen und Begriffe
 **Wann ist Rekursion zu verwenden?** (siehe *Rekursion*.)
 * Wenn das Problem rekursiv gestellt ist
-	* Fibonacci, Fakultät, Türme von Hanoi, Suchen von Wegen, Pfadplanung…)
+  * Fibonacci, Fakultät, Türme von Hanoi, Suchen von Wegen, Pfadplanung…)
 * Wenn keine Schleifen möglich/erlaubt
 * Wenn die maximale Rekursiontiefe nicht überschritten wird
-	* ≙ Anzahl der gleichzeitigen Aufrufe einer rekursiven Funktion
+  * ≙ Anzahl der gleichzeitigen Aufrufe einer rekursiven Funktion
 
 **Lineare Rekursion**
 * Funktion, die pro Ausführung nur einen rekursiven Aufruf vornimmt
@@ -785,121 +785,121 @@ constexpr int function(int c);	// deklariert Funktion, die zur Compilezeit ausge
 **Felder fester Länge**
 * Der Datentyp und die Größe stehen zur Compilezeit fest
 * Deklaration mit Template
-	* Möglichkeit, Datenstrukturen für viele Typen auf einmal zu definieren
-	* Namen und Templateparamter als Argumente
-	* *Diese müssen zur Compilezeit feststehen*
+  * Möglichkeit, Datenstrukturen für viele Typen auf einmal zu definieren
+  * Namen und Templateparamter als Argumente
+  * *Diese müssen zur Compilezeit feststehen*
 
 ### Einführung in die Welt der Felder
 ```c++
-std::array	< int, 10 >		 	feld;
-Datentyp	Templateparameter	Variablenname
-			Inhaltstyp, Größe
-							//definiert ein statisches Feld der Länge 3
+std::array  < int, 10 >         feld;
+Datentyp    Templateparameter   Variablenname
+            Inhaltstyp, Größe
+                            //definiert ein statisches Feld der Länge 3
 std::array< int, 10 > feld = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-							// deklariert das Feld feld, vom Typ int mit 10 Elementen
-int feld[10] = {…}			// veraltet
+                            // deklariert das Feld feld, vom Typ int mit 10 Elementen
+int feld[10] = {…}            // veraltet
 
 int n = 3;
-std::cout << feld.at(n);	// Ausgabe von dem Element an Stelle 3
-							// Prüft, ob der Index gültig ist
-std::cout << feld[n];		// Selbiges, ohne Test → schneller
+std::cout << feld.at(n);    // Ausgabe von dem Element an Stelle 3
+                            // Prüft, ob der Index gültig ist
+std::cout << feld[n];       // Selbiges, ohne Test → schneller
 
 int i = 7;
-feld.at(i) = 41;			// Das Element an Stelle 3 überschreiben
+feld.at(i) = 41;            // Das Element an Stelle 3 überschreiben
 feld[i] = 42;
-std::cout << feld.size();	// Größe des Feldes asugeben
+std::cout << feld.size();   // Größe des Feldes asugeben
 ```
 
 **Felder dynamischer Länge**
 * Größe bleibt während der Laufzeit veränderlich
-	* Größe muss nicht vorher festgelegt werden
-	* Zeilen in Matrizen müssen nicht gleich lang sein
-	* Prüfung auf Größe in Laufzeit kostet Zeit
-	* Zusätzlicher Speicher für Länge → für keine Felder ineffizient
+  * Größe muss nicht vorher festgelegt werden
+  * Zeilen in Matrizen müssen nicht gleich lang sein
+  * Prüfung auf Größe in Laufzeit kostet Zeit
+  * Zusätzlicher Speicher für Länge → für keine Felder ineffizient
 
 ```c++
-std::vector< int > leer;		// deklariert leeres Feld vom Typ int
-std::vector< int > ehn(N);		// deklariert Vektor der Länge N vom Typ int
-std::vector< int > zuv(N, 42);	// deklariert Vektor der Länge N und setzt alle Werte auf 42
+std::vector< int > leer;        // deklariert leeres Feld vom Typ int
+std::vector< int > ehn(N);      // deklariert Vektor der Länge N vom Typ int
+std::vector< int > zuv(N, 42);  // deklariert Vektor der Länge N und setzt alle Werte auf 42
 std::vector< int > prim( {6, 3, 8, 7, 11} );
-								// deklariert Feld prim und weist Werte zu
+                                // deklariert Feld prim und weist Werte zu
 
-prim.at(0) = 2;			// setzt das 0. Element auf 2
+prim.at(0) = 2;         // setzt das 0. Element auf 2
 prim[2] = 5;
-prim.pop.back();		// !entfernt das letzte Element
-prim.push.back(3);		// !fügt 3 an das Ende es Vektors an
-						// Führt zu unnötigen Kopieroperationen wenn Kapazität überschritten
-						// Speicher nach Feld belegt → neuen Speicher anfordern
-						// Wenn möglich immer mehr reservieren bzw. statischs Feld nutzen
+prim.pop.back();        // !entfernt das letzte Element
+prim.push.back(3);      // !fügt 3 an das Ende es Vektors an
+                        // Führt zu unnötigen Kopieroperationen wenn Kapazität überschritten
+                        // Speicher nach Feld belegt → neuen Speicher anfordern
+                        // Wenn möglich immer mehr reservieren bzw. statischs Feld nutzen
 
-std::cout << prim.at(n);	// liefert das n-te Element
-prim.front();				// liefert das erste Element
-prim.back();				// liefert das letzte Elemement
+std::cout << prim.at(n);    // liefert das n-te Element
+prim.front();               // liefert das erste Element
+prim.back();                // liefert das letzte Elemement
 
-prim.empty();				// test, ob prim Werte enthält
-prim.clear();				// !leert das Feld *erntet es :P*
+prim.empty();               // test, ob prim Werte enthält
+prim.clear();               // !leert das Feld *erntet es :P*
 
-prim.resize();				// !Ändern der Größe des Feldes
-prim.size();				// liefert Größe des Feldes
-prim.capacity();			// liefert maximale Größe, ohne neuen Speicher anzufragen
-prim.reserve( size_t N);	// !Allokation von Speicher, ohne die Größe zu ändern
-							// ! → schreibt → nur für dynamische Felder
+prim.resize();              // !Ändern der Größe des Feldes
+prim.size();                // liefert Größe des Feldes
+prim.capacity();            // liefert maximale Größe, ohne neuen Speicher anzufragen
+prim.reserve( size_t N);    // !Allokation von Speicher, ohne die Größe zu ändern
+                            // ! → schreibt → nur für dynamische Felder
 ```
 
 **Textfelder bzw. Zeichenketten**
 ```c++
-std::string text;			// Feld aus Bruchstaben
+std::string text;           // Feld aus Bruchstaben
 text = "Hallo Welt!";
-std::cout << text[0];		// liefert "H"
-text.length();				// liefert Länge des Feldes
+std::cout << text[0];       // liefert "H"
+text.length();              // liefert Länge des Feldes
 ```
 
 * Manipulation von Zeichenketten
 ```c++
-text = "Te" + "xt";			// Verketten von Zeichenketten mittels +
-text += ".";				// text = "Text."
+text = "Te" + "xt";         // Verketten von Zeichenketten mittels +
+text += ".";                // text = "Text."
 ```
 
 * Suchen in Strings
 ```c++
-string.find("match", 50);		// Suche Position von "match" ab Position 50
-string.rfind("match");			// Suche Position von "match" rückwärts
+string.find("match", 50);       // Suche Position von "match" ab Position 50
+string.rfind("match");          // Suche Position von "match" rückwärts
 
 // Suchen von einzelnen, wiederholenden Buchstaben
 std::string str ("Ersetze alle e und a durch Asterisks.");
-std::size_t found = str.find_first_of("ea");				// erster Druchlauf
-while (found!=std::string::npos) {							// Druchlaufen, bis zum Ende erreicht
-	str[found]='*';											// falls gefunden → ersetzen
-	found=str.find_first_of("ea",found+1);					// weiter suchen
+std::size_t found = str.find_first_of("ea");                // erster Druchlauf
+while (found!=std::string::npos) {                          // Druchlaufen, bis zum Ende erreicht
+    str[found]='*';                                         // falls gefunden → ersetzen
+    found=str.find_first_of("ea",found+1);                  // weiter suchen
 }
 ```
 
 * Konvertierungen
 ```c++
-text = std::to_string(5);	// Konvertierung zu String
+text = std::to_string(5);   // Konvertierung zu String
 
 int i = std::stoi("10.5 Hallo Welt");
 int i = std::stoi(string, size_t*, base);
 // Konvertierung von Str zu Int
 // size_t* enthält Postition ab ersten nicht gültigen Zeichen
 
-string → int	stoi
-string → double	stod
-string → long	stol
+string → int  stoi
+string → double   stod
+string → long stol
 ```
 
 **Durchlaufen von Feldern**
 * Eigener Datentyp für Größen: `size_t`
 ```c++
 for( size_t = 0; i < text.length(); ++i ) {
-	std::cout << "Der Buchstabe an Stelle " << i << " lautet " << text[i] << "\n";
+    std::cout << "Der Buchstabe an Stelle " << i << " lautet " << text[i] << "\n";
 }
 ```
 
 **Objekte und ihre Eigenschaften**
 * Objekte haben Funktionen, mit denen der Zustand dieser angefragt werden kann
 * in C++ ist der Operator `.`
-	* `feld.size()` ruft die Funktion `size()` auf, des Objektes `feld` auf
+  * `feld.size()` ruft die Funktion `size()` auf, des Objektes `feld` auf
 
 
 ### Anwendung von Feldern
@@ -910,26 +910,26 @@ for( size_t = 0; i < text.length(); ++i ) {
 **Speicherung von 2D-Feldern**
 * Matrizen oder Bilder
 * Speicherung von Feldern, in Feldern
-	* Direkte Indizierung möglich → Mathe
-	* Durchlaufen aller Einträge → verschachtelte Schleifen
-	* Vektoren: jede Zeile muss in der Länge gesetzt werden
+  * Direkte Indizierung möglich → Mathe
+  * Durchlaufen aller Einträge → verschachtelte Schleifen
+  * Vektoren: jede Zeile muss in der Länge gesetzt werden
 * Alternativ auch linearisiert
-	* Einfaches Durchlaufen aller Werte
-	* Indizes müssen *manuell* berechnet werden
-	* Nachbarn nicht eindeutig
-	* separate Größenangaben
+  * Einfaches Durchlaufen aller Werte
+  * Indizes müssen *manuell* berechnet werden
+  * Nachbarn nicht eindeutig
+  * separate Größenangaben
 
 ```c++
 // Felder von Feldern
-array<array<double, N>, M> A;	// Deklaration eines 2D-Feldes
-A[3][1] = 5;					// Zuweisung
+array<array<double, N>, M> A;   // Deklaration eines 2D-Feldes
+A[3][1] = 5;                    // Zuweisung
 A.at(3).at(1) = 5;
 
 array<array<double, 3>, 4> A = {
-	{ 8.0, 20.3, 14.2 },
-	{ 7.6, 18.3, 12.2 },
-	{ 5.3, 20.1, 12.2 },
-	{ 1.2, 1.0,	 1.1 }
+    { 8.0, 20.3, 14.2 },
+    { 7.6, 18.3, 12.2 },
+    { 5.3, 20.1, 12.2 },
+    { 1.2, 1.0,  1.1 }
 };
 
 // 2D als 1D-Feld → Linearisierung
@@ -942,23 +942,23 @@ std::vector< std::vector< double > > feld2d( 3, std::vector< double >( 4 ) );
 // ist äquivalent zu:
 std::vector< std::vector< double > > feld2d( 3 );
 for( size_t zeile = 0; zeile < 3; ++zeile ) {
-	feld2d.at( zeile ) = std::vector< double >( 4 );
-	}
+    feld2d.at( zeile ) = std::vector< double >( 4 );
+    }
 // ist äquivalent zu:
 std::vector< std::vector< double > > feld2d( 3 );
 for( size_t zeile = 0; zeile < 3; ++zeile ) {
-	feld2d.at( zeile ).resize( 4 );
+    feld2d.at( zeile ).resize( 4 );
 }
 
 
 // Jede Zeile kann unterschiedliche Größe haben
 // Dreiecksmatrix ermöglicht
-	00
-A=	01	11
-	20	21	20
+    00
+A=  01  11
+    20  21  20
 std::vector< std::vector< double > > A( 3 );
 for( size_t zeile = 0; zeile < 3; ++zeile ) {
-	A.at( zeile ).resize( zeile + 1 );
+    A.at( zeile ).resize( zeile + 1 );
 }
 ```
 
@@ -977,22 +977,22 @@ P1
 ## Objekte und Klassen
 * Objekte werden aus Funktionen und Daten gebildet
 * Bsp.: `std::vector< double>` ist ein Objekt
-	* Funktionen verfügbar: `.size` und `.at(i)`
+  * Funktionen verfügbar: `.size` und `.at(i)`
 * Klassen in c++
-	* Repräsentant eines Objektes ist eine Klasse
-	* z.B. Klasse PKW, die Autos repräsentiert
-	* ein Objekt ist eine Instanz einer Klasse
-	* z.B. Objekt diesesAuto des Typs PKW
-	* Attribute einer Klasse sind Variablen, die zur Klasse gehören
-	* z.B. Attribut fahrtüchtig in der Klasse PKW
-	* Methoden sind Funktionen die zur Klasse gehören
-	* z.B. fahrzeughalter() in der Klasse PKW
+  * Repräsentant eines Objektes ist eine Klasse
+  * z.B. Klasse PKW, die Autos repräsentiert
+  * ein Objekt ist eine Instanz einer Klasse
+  * z.B. Objekt diesesAuto des Typs PKW
+  * Attribute einer Klasse sind Variablen, die zur Klasse gehören
+  * z.B. Attribut fahrtüchtig in der Klasse PKW
+  * Methoden sind Funktionen die zur Klasse gehören
+  * z.B. fahrzeughalter() in der Klasse PKW
 
 ### Eigene Datentypen
 ```c++
-using zahlen = std::vector< int >;	// Definition von Datentyp "zahlen"
-typedef std::vector< int > zahlen;	// selbiges
-zahlen Primzahlen;					// → std::vector< int > Primzahlen
+using zahlen = std::vector< int >;  // Definition von Datentyp "zahlen"
+typedef std::vector< int > zahlen;  // selbiges
+zahlen Primzahlen;                  // → std::vector< int > Primzahlen
 Primzahlen.push_back(2);
 ```
 
@@ -1000,19 +1000,19 @@ Primzahlen.push_back(2);
 * Aus C übernommen und Standard ist `public`
 * Sammlung von Daten, ohne direkte Verknüpfung zu Funktionen
 ```c++
-struct Student {				// Struktur Student
-	std::string name;			// Vermeidung von unübersichtlicher Speicherung in Listen
-	int matrikelnummer;			// Definition von allen Eigenschaften als Variablen
-	int semester;				// "Bündelung" von Variablen zu neuen Datentypen
-	std::string  studiengruppe;
+struct Student {                // Struktur Student
+    std::string name;           // Vermeidung von unübersichtlicher Speicherung in Listen
+    int matrikelnummer;         // Definition von allen Eigenschaften als Variablen
+    int semester;               // "Bündelung" von Variablen zu neuen Datentypen
+    std::string  studiengruppe;
 };
 
-Student student1;				// erstelle neuen (leeren) Student
-student1.name = "Otto";			// Setze Eigenschaft Name auf "Otto"(String)
-student1.matrikelnummer = 42;	// Setze Eigenschaft MN auf 42(int)
+Student student1;               // erstelle neuen (leeren) Student
+student1.name = "Otto";         // Setze Eigenschaft Name auf "Otto"(String)
+student1.matrikelnummer = 42;   // Setze Eigenschaft MN auf 42(int)
 
-std::vector<Student> studenten;	// erstelle Liste bzw. Feld von Studenten
-studenten.push_back(student1);	// Füge eine Kopie von Otto zur Liste hinzu
+std::vector<Student> studenten; // erstelle Liste bzw. Feld von Studenten
+studenten.push_back(student1);  // Füge eine Kopie von Otto zur Liste hinzu
 ```
 
 
@@ -1020,46 +1020,46 @@ studenten.push_back(student1);	// Füge eine Kopie von Otto zur Liste hinzu
 * Beschreibt den Aufbau von Objekten gleichen Typs
 * Definieren Funktionen, die mit den Objekten verbunden sind
 * Attribut → Eigenschaft bzw. Objektvariable
-	* Variablen, die die Klasse beschreiben
-* Klasse:	Student
-* Instanz:	RainerFunden, MaxMustermann
-* Methode:	Student::erhoeheStudiensemester(int)
-	* Funktionen, die zu der Klasse direkt gehören
+  * Variablen, die die Klasse beschreiben
+* Klasse:   Student
+* Instanz:  RainerFunden, MaxMustermann
+* Methode:  Student::erhoeheStudiensemester(int)
+  * Funktionen, die zu der Klasse direkt gehören
 
 **Erstellen von Klassen**
 * Zur Verwendung ist Speicherung und Implementierung egal
 * Nur der Zugriff auf die Klasse ist interessant
-	* Funktion zum Zugriff in `public` → *Interface*
+  * Funktion zum Zugriff in `public` → *Interface*
 * Funktionen und Klassen werden bei der Definition *nicht ausgeführt*
 * Instanzen können auch als konstant deklariert werden, um das Schreiben zu unterbinden
 
 **Konstruktoren**
 * Erzeugung eines Typs einer Klasse durch aufrufen des **Konstruktors**
-	* Definition in `public`
-	* gleicher Name wie die Klasse
-	* kann beliebig viele Argumente haben
-	* kann überladen werden → Konstruktoren mit unterschiedlichen Argumentenlisten
-	* *kein* Rückgabetyp
+  * Definition in `public`
+  * gleicher Name wie die Klasse
+  * kann beliebig viele Argumente haben
+  * kann überladen werden → Konstruktoren mit unterschiedlichen Argumentenlisten
+  * *kein* Rückgabetyp
 * Zerstörung eines Typs einer Klasse durch aufrufen des **Destruktors**
-	* explizites Aufrufen durch `delete Objektname;`
-	* Name: `~Klassenname`
-	* darf *keine* Argumente haben (wird automatisch aufgerufen)
-	* ebenfalls *kein* Rückgabetyp
-	* explizite Freigabe von Speicher (wenn nötig)
-	* explizites Abmelden von einem Objekt aus dem System
+  * explizites Aufrufen durch `delete Objektname;`
+  * Name: `~Klassenname`
+  * darf *keine* Argumente haben (wird automatisch aufgerufen)
+  * ebenfalls *kein* Rückgabetyp
+  * explizite Freigabe von Speicher (wenn nötig)
+  * explizites Abmelden von einem Objekt aus dem System
 
 **Sichtbarkeit und Aufbau**
 * Klassen sind standardmäßig `private`
 ```c++
 class Klassenanme {
 public:
-	// Öffentlich → für jeden sichtbar
-	// IdR. Methoden zum Lesen und Schreiben
+    // Öffentlich → für jeden sichtbar
+    // IdR. Methoden zum Lesen und Schreiben
 protected:
-	// Geschützt → nur für abgeleitete Klassen sichtbar
+    // Geschützt → nur für abgeleitete Klassen sichtbar
 private:
-	// Privat → nur für Klasse selbst sichtbar
-	// IdR. Attribute
+    // Privat → nur für Klasse selbst sichtbar
+    // IdR. Attribute
 };
 ```
 
@@ -1067,33 +1067,33 @@ private:
 ```c++
 class Student {
 public:
-	void setName(std::string neuerName) {	// Überprüfung, dass nur sinnvolle Daten vorkommen
-		if(neuerName != "")
-			name = neuerName;
-	}
+    void setName(std::string neuerName) {   // Überprüfung, dass nur sinnvolle Daten vorkommen
+        if(neuerName != "")
+            name = neuerName;
+    }
 
-	void setSemester(int i) {
-		if(i > 0)
-			semester = i;
-	}
+    void setSemester(int i) {
+        if(i > 0)
+            semester = i;
+    }
 
-	int getSemester() {						// Ausgabe von Werten über Methode möglich
-		return semester;
-	}
+    int getSemester() {                     // Ausgabe von Werten über Methode möglich
+        return semester;
+    }
 
 private:
-	std::string name;
-	int martrikelnummer;
-	int semester;
-	std::string studiengruppe;
+    std::string name;
+    int martrikelnummer;
+    int semester;
+    std::string studiengruppe;
 };
 
 Student sudente;
-studente.name = "Otto";			// Nicht möglich, da "name" in private
-studente.setName("Otto");		// Führt Methode setName aus
+studente.name = "Otto";         // Nicht möglich, da "name" in private
+studente.setName("Otto");       // Führt Methode setName aus
 
-const Student RainerFunden;		// Konstanter Student
-RainerFunden.setSemester(3);	// Fehler, da RainerFunden konstant ist
+const Student RainerFunden;     // Konstanter Student
+RainerFunden.setSemester(3);    // Fehler, da RainerFunden konstant ist
 ```
 
 **Statische Funktionen**
@@ -1102,40 +1102,40 @@ RainerFunden.setSemester(3);	// Fehler, da RainerFunden konstant ist
 ```c++
 class Student {
 public:
-	static constexpr int ECTSinH = 30;
-	stdatic int ects2h(int ects) {
-		return ects * ECTSinH;
-	}
+    static constexpr int ECTSinH = 30;
+    stdatic int ects2h(int ects) {
+        return ects * ECTSinH;
+    }
 };
 
 Student nummerEins;
-std::cout << nummerEins.ects2h(1) << '\n';	// Aufruf mit Objekt
-std::cout << Student::ects2h(1) << '\n';	// Selbiges, ohne Objekt
+std::cout << nummerEins.ects2h(1) << '\n';  // Aufruf mit Objekt
+std::cout << Student::ects2h(1) << '\n';    // Selbiges, ohne Objekt
 ```
 
 **Zählen von Objekten**
 ```c++
 class CountedClass {
-	static int counter;	// Definition des Zählers
+    static int counter; // Definition des Zählers
 public:
-	CountedClass() {	// Aufruf beim Erstellen → Konstruktor
-		counter++;
-	}
-	~CountedClass() {	// Aufruf beim Zerstören → Destruktor
-		counter--;
-	}
+    CountedClass() {    // Aufruf beim Erstellen → Konstruktor
+        counter++;
+    }
+    ~CountedClass() {   // Aufruf beim Zerstören → Destruktor
+        counter--;
+    }
 };
 
-int CountedClass::counter = 0;	// Zähler wird initialisiert
+int CountedClass::counter = 0;  // Zähler wird initialisiert
 
 int main() {
-	// CountedClass::counter = 0
-	CountedClass a; 			// CountedClass::counter = 1
-	{
-		CountedClass b; 		// CountedClass::counter = 2
-		CountedClass c; 		// CountedClass::counter = 3
-	}
-	// CountedClass::counter = 1, da Objekte ihre Gültigkeit verloren haben
+    // CountedClass::counter = 0
+    CountedClass a;             // CountedClass::counter = 1
+    {
+        CountedClass b;         // CountedClass::counter = 2
+        CountedClass c;         // CountedClass::counter = 3
+    }
+    // CountedClass::counter = 1, da Objekte ihre Gültigkeit verloren haben
 }
 ```
 
@@ -1143,72 +1143,72 @@ int main() {
 ```c++
 class Komplex {
 public:
-	Komplex() {						// Standardkonstruktor → Aufruf ohne Parameter
-		real = 0.0;
-		imag = 0.0;
-	}
-	Komplex(double r, double i) {	// Konstruktor → Aufruf mit Parameter
-		real = r;
-		imag = i;
-	}
+    Komplex() {                     // Standardkonstruktor → Aufruf ohne Parameter
+        real = 0.0;
+        imag = 0.0;
+    }
+    Komplex(double r, double i) {   // Konstruktor → Aufruf mit Parameter
+        real = r;
+        imag = i;
+    }
 
-	void set(double r, double i) {
-		real = r;
-		real = i;
-	}
-	double getReal() const {		// Ruft Realteil ab → liest nur (const)
-		return real;
-	}
-	double getImag() const {		// Ruft Imaginärteil ab → liest nur (const)
-		return imag;
-	}
+    void set(double r, double i) {
+        real = r;
+        real = i;
+    }
+    double getReal() const {        // Ruft Realteil ab → liest nur (const)
+        return real;
+    }
+    double getImag() const {        // Ruft Imaginärteil ab → liest nur (const)
+        return imag;
+    }
 
 
-	Komplex add(Komplex rhs) {		// Memberfunktion zum addieren a.add(b) = c
-		Komplex result;
-		result.set(real + rhs.getReal(), imag + rhs.getImag());	// RightHandSide
-		return result;
-	}
+    Komplex add(Komplex rhs) {      // Memberfunktion zum addieren a.add(b) = c
+        Komplex result;
+        result.set(real + rhs.getReal(), imag + rhs.getImag()); // RightHandSide
+        return result;
+    }
 
-	Komplex add2(Komplex lhs, Komplex rhs) {
-		Komplex result;
-		result.set(lhs.getReal() + rhs.getReal(), lhs.getReal + rhs.getImag());
-		return result;
-	}
+    Komplex add2(Komplex lhs, Komplex rhs) {
+        Komplex result;
+        result.set(lhs.getReal() + rhs.getReal(), lhs.getReal + rhs.getImag());
+        return result;
+    }
 
-	static Komplex add3(Komplex lhs, Komplex rhs) {
-		Komplex result;
-		result.set(lhs.getReal() + rhs.getReal(), lhs.getReal + rhs.getImag());
-		return result;
-	}
+    static Komplex add3(Komplex lhs, Komplex rhs) {
+        Komplex result;
+        result.set(lhs.getReal() + rhs.getReal(), lhs.getReal + rhs.getImag());
+        return result;
+    }
 
 private:
-	double real;
-	double imag;
+    double real;
+    double imag;
 };
 
 // Überladen von Operatoren (Beste Option für Mathe; mit allen Operatoren möglich → siehe String)
 Komplex operator+(Komplex lhs, Komplex rhs) {
-	Komplex result;
-	result.set(lhs.getReal() + rhs.getReal(), lhs.getReal + rhs.getImag());
-	return result;
+    Komplex result;
+    result.set(lhs.getReal() + rhs.getReal(), lhs.getReal + rhs.getImag());
+    return result;
 }
 
 // Definition als globale Funktion (zu vermeiden aber vertretbar)
 Komplex add2(Komplex lhs, Komplex rhs) {
-	Komplex result;
-	result.set(lhs.getReal() + rhs.getReal(), lhs.getReal + rhs.getImag());
-	return result;
+    Komplex result;
+    result.set(lhs.getReal() + rhs.getReal(), lhs.getReal + rhs.getImag());
+    return result;
 }
 
 
-Komplex sum1	= add(a, b);			// globale Funktion
-Komplex sum2	= a + b;				// Operatorüberladung
-Komplex sum3	= a.add(b);				// Memberfunktion
-Komplex sum4	= a.add2(a,b);			// Memberfunktion in schrecklich
-Komplex sum5	= z.add2(a,b);
-Komplex sum6	= Komplex::add3(a,b);	// Memberfunktion (static) in nicht ganz so schrecklich
-										// sollte dennoch vermieden werden…
+Komplex sum1    = add(a, b);            // globale Funktion
+Komplex sum2    = a + b;                // Operatorüberladung
+Komplex sum3    = a.add(b);             // Memberfunktion
+Komplex sum4    = a.add2(a,b);          // Memberfunktion in schrecklich
+Komplex sum5    = z.add2(a,b);
+Komplex sum6    = Komplex::add3(a,b);   // Memberfunktion (static) in nicht ganz so schrecklich
+                                        // sollte dennoch vermieden werden…
 ```
 
 ### Aufteilung in Dateien
@@ -1216,38 +1216,38 @@ Komplex sum6	= Komplex::add3(a,b);	// Memberfunktion (static) in nicht ganz so s
 * Beschreibung von Objekten und wie diese gespeichert sind
 * Definition von Klassen und allgemeine Definitionen
 ```c++
-#pragma once				// Sicherstellen, dass diese Datei 1x
-							// pro Kompiierungseinheit gelesen wird
+#pragma once                // Sicherstellen, dass diese Datei 1x
+                            // pro Kompiierungseinheit gelesen wird
 #include <something>
 
 class Student {
 public:
-	std::string getName();
+    std::string getName();
 private:
-	std::string vorname;
-	std::string nachname;
+    std::string vorname;
+    std::string nachname;
 };
 ```
 
 **Source Student.cpp**
 * Implementierung der Klasse / der Funktionen
 ```c++
-#include "Student.hpp"	// Definition von Studentklasse
+#include "Student.hpp"  // Definition von Studentklasse
 
-Student::Student() {	// Konstruktor
-	/ …
+Student::Student() {    // Konstruktor
+    / …
 }
 
-Student::~Student() {	// Destruktor
-	/ …
+Student::~Student() {   // Destruktor
+    / …
 }
 
 std::string Student::getName() {
-	return nachname + ", " + vorname;
+    return nachname + ", " + vorname;
 }
 
-extern int a;				// Jedes einbindende Programm hat Zugriff auf a (global)
-							// Deklatarion, ohne Definition
+extern int a;               // Jedes einbindende Programm hat Zugriff auf a (global)
+                            // Deklatarion, ohne Definition
 ```
 
 **Source main.cpp**
@@ -1257,19 +1257,19 @@ extern int a;				// Jedes einbindende Programm hat Zugriff auf a (global)
 #include "Student.hpp"
 
 int main() {
-	Student RainerFunden;
-	std::cout << RainerFunden.getName();
+    Student RainerFunden;
+    std::cout << RainerFunden.getName();
 
-	int a;								// a wird definiert (siehe oben)
+    int a;                              // a wird definiert (siehe oben)
 }
 ```
 
 **Kompilierung**
 * *In einem Rutsch*
-	* `clang++ main.cpp Student.cpp`
-	* `g++ -o programm main.cpp Studend.cpp`
+  * `clang++ main.cpp Student.cpp`
+  * `g++ -o programm main.cpp Studend.cpp`
 * Einzeln (bei größeren Programmen)
-	* Erneute Kompilierung von Programmteilen möglich
-	* `g++ -c Student.cpp` Erzeugt student.o
-	* `g++ -c main.cpp` Erzeugt main.o
-	* `g++ -o programm student.o main.o` Binden zu Programm
+  * Erneute Kompilierung von Programmteilen möglich
+  * `g++ -c Student.cpp` Erzeugt student.o
+  * `g++ -c main.cpp` Erzeugt main.o
+  * `g++ -o programm student.o main.o` Binden zu Programm
