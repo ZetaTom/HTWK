@@ -197,7 +197,7 @@ if( anfrageVonFussgaenger ) {
 enum class Ampelfarbe { Rot = 0, Gruen = 1};    // Explizite Zuweisung
 ```
 
-###Typumwandlungen
+### Typumwandlungen
 * Umwandlung von Typen kann zu Genauigkeitsverlusten bis hin zum Informationsverlust führen. Ursachen dafür sind:
   * Genauigkeitverlust
   * Überschreitung des Wertebereiches
