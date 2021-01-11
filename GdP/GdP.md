@@ -1,9 +1,9 @@
 ```
-  ____                      _ _                            _
- / ___|_ __ _   _ _ __   __| | | __ _  __ _  ___ _ __   __| | ___ _ __
-| |  _| '__| | | | '_ \ / _` | |/ _` |/ _` |/ _ | '_ \ / _` |/ _ | '__|
-| |_| | |  | |_| | | | | (_| | | (_| | (_| |  __| | | | (_| |  __| |
- \____|_|   \__,_|_| |_|\__,_|_|\__,_|\__, |\___|_| |_ \__,_|\___|_|
+  ____                      _ _                              _
+ / ___|_ __ _   _ _ __   __| | | __ _  __ _  ___ _ __     __| | ___ _ __
+| |  _| '__| | | | '_ \ / _` | |/ _` |/ _` |/ _ | '_ \   / _` |/ _ | '__|
+| |_| | |  | |_| | | | | (_| | | (_| | (_| |  __| | | | | (_| |  __| |
+ \____|_|   \__,_|_| |_|\__,_|_|\__,_|\__, |\___|_| |_|  \__,_|\___|_|
                                       |___/
  ____                                                _
 |  _ \ _ __ ___   __ _ _ __ __ _ _ __ ___  _ __ ___ (_) ___ _ __ _   _ _ __   __ _
@@ -23,7 +23,7 @@ GNU Compiler
 * Zusammen: `g++ -Wall -std=c++14 -o programm programm.cpp`
   * `-Wall` aktiviert alle Fehlermeldungen und Warnungen
   * für clang++: `-Weverything`
-    
+
 ### Hallo Welt und Programmstruktur
 ```c++
 #include <iostream>
@@ -96,7 +96,7 @@ constexpr double g{ f };        // in Ordnung, da ableitbar
 ```c++
 void f(int a, int b) {
     static int n = 0;   // beim ersten Funktionsdurchlauf: definiert und setzt n auf 0
-    // …                // bei folgenden Aufrufen: wird n vom vorhergehenden Aufruf verwendet
+    // ...              // bei folgenden Aufrufen: wird n vom vorhergehenden Aufruf verwendet
 }                       // für Rekursion nützlich (siehe Hanoi)
 ```
 
@@ -150,7 +150,7 @@ c++|Beispiel|Bedeutung
   * Zuweisung als `i='x'` bzw. `i=64`
   * Ein-/Ausgabe immer als Zeichen
   * Rechnen und vergleichen möglich `'a' < 'b'`
-    
+
 **Zahlen**
 Typ|Bits|Maximum|Genauigkeit
 ---|----|-------|-----------
@@ -235,27 +235,27 @@ int i = int(d);
   * `std::cout << var` bzw. `std::cout << "Hallo"`
   * Verkettung möglich `std::cout << "Wert von n: " << n "MeV"`
   * neue Zeilen
-         `std::endl` fügt programmabhängig das Zeilenende ein und wartet, bis Ausgabe beendet
-         `"\n"` Zeilenende unter *NIX, inkompatibel mit z.B. WIN
-         `std::flush` Wartet bis die Ausgabe beendet ist; Erzwingt die Ausgabe
+      * `std::endl` fügt programmabhängig das Zeilenende ein und wartet, bis Ausgabe beendet
+      * `"\n"` Zeilenende unter *NIX, inkompatibel mit z.B. WIN
+      * `std::flush` Wartet bis die Ausgabe beendet ist; Erzwingt die Ausgabe
 * Formatierung von Zahlen
   * Führende Zeichen bzw. Leerzeichen Einfügen
-         Bestandteil von `iomanip`
-         `std::cout << std : : setw ( 4 ) << 1 ;` gibt `     1` aus
-         `std::cout << std::setfill ('x') << std::setw (10) << 42` gibt `xxxxxxxx42` aus
+      * Bestandteil von `iomanip`
+      * `std::cout << std : : setw ( 4 ) << 1 ;` gibt `    1` aus
+      * `std::cout << std::setfill ('x') << std::setw (10) << 42` gibt `xxxxxxxx42` aus
   * Pluszeichen ausgeben: `std::cout << std::showpos`
   * Wissenschaftliche Schreibweise: `std::cout << std::scientific`
   * Ausgabegenauigkeit festlegen
-         `std::cout << std::setprecision(5) << 3.14159` gibt `3.1416` aus
-         `std::cout << std::setprecision(9) << 3.14159` gibt auch `3.1416` aus
-         `std::cout << std::fixed << std::setprecision(9) << 3.14159` gibt `3.141590000` aus
+      * `std::cout << std::setprecision(5) << 3.14159` gibt `3.1416` aus
+      * `std::cout << std::setprecision(9) << 3.14159` gibt auch `3.1416` aus
+      * `std::cout << std::fixed << std::setprecision(9) << 3.14159` gibt `3.141590000` aus
 * Eingabe lesen
   * Enthalten in `iostream`
   * Eingabe von *Worten* möglich. D.h. Bis zu `\n` oder `␣`
   * `std::cin >> var`
   * Einlesen einer Zeile möglich mit: `std::getline(std::cin, var)`
-         also bis LF lesen
-    
+      * also bis LF lesen
+
 
 ### Dateien lesen und Schreiben
 * Der Dateityp `std::ofstream` *Output-Filesystem* erlaubt es, in Dateien zu schreiben
@@ -270,7 +270,8 @@ int main() {
 }                                       // Ende des Blockes, fileOut verliert Gültigkeit
                                         // Resource wird freigegeben; Datei geschlossen
 ```
-* Einlesen einer gesamten Datei
+
+**Einlesen einer gesamten Datei**
 ```c++
 std::string leseGanzeDatei2(const std::string& dateiname) {
     std::ifstream ifs(dateiname);
@@ -300,7 +301,8 @@ std::string leseGanzeDatei(const std::string& dateiname) {
   * `using namespace std;` setzt `std` als Standard *nicht empfohlen*
   * `using std::cout;` ermöglicht partielle Nutzung
   * `std::cout << a` → `cout << a`
-* Eigene Namensräume erstellen
+
+**Eigene Namensräume erstellen**
 ```c++
 namespace htwk {                // Deklaration eines eigenen Namensraums
     const int dozenten{ 1 };    // Variable im Namensraum
@@ -321,54 +323,56 @@ int main() {
 ```c++
 int a = 5;      // Deklaration einer globalen Variable
 int main() {
-    // …  
+    // ...
     int b = a;  // Die Variable ist überall gültig
-    // …        // und kann nicht neu definiert werden
+    // ...      // und kann nicht neu definiert werden
 }
 ```
 
 ### if, else und der geschleifte Spaß
-* Fallunterscheidung (wahr oder falsch)
+**Fallunterscheidung (wahr oder falsch)**
 ```c++
 if( … ) { // wenn …
-    // …    // dann …
+    // ...  // dann …
 } else {    // sonst …
-    // …    // optional
+    // ...  // optional
 }
 ```
-* Fallunterscheidung
+
+**Fallunterscheidung**
 ```c++
 switch( … ) {         // Unterscheidung anhand von …
     case 1:             // Fall, dass Wert == 1
-    // …                // dann
+    // ...              // dann
     break;              // beendet Ausführung des switch-Blocks
     case 'b':           // zulässig char
-    // …  
+    // ...
     break;
     case farbe::blau:   // zulässig enum
     case farbe::gelb:   // wenn einer übereinstimmt
     case farbe::cyan:   // dann
-    // …  
+    // ...
     break;
     default:            // falls kein anderer Fall eintritt
-    // …  
+    // ...
 }
 ```
-* Schleifen
+
+**Schleifen**
   * `break;` Sofortiger Abbruch der nächstäußeren switch/while/do-while/for-Anweisung
   * `continue;` Abbruch der aktuellen und sofortiger Start des nächsten Zykels einer while/do-while/for-Anweisung
 ```c++
 while( … ) {  // Kopfgesteuerte Schleife
-    // …        // Solange …
+    // ...      // Solange …
 }               // tue …
 
 do{             // Fußgesteuerte Schleife
-    // …        // wird mindestens 1x ausgeführt
+    // ...      // wird mindestens 1x ausgeführt
 } while( … );
 
 // Zählschleife
 for (int i; i < 100; ++i) {
-    // …  
+    // ...
 }
 ```
 
@@ -391,7 +395,7 @@ Unterscheidung in
 **Prototyp der Funktion**
 ```c++
 double              sqrt            ( double x  )
-Rückgabedatentyp   Funktionsname    Parameter 
+Rückgabedatentyp   Funktionsname    Parameter
 ```
 
 * Rückgabedatentyp: der Typ, den die Funktion an den Aufrufer zurückgibt
@@ -525,7 +529,7 @@ printf( "Hallo %d %d %d %d", 1, 2, 3, 4 );
  * @return die Quadratwurzel zur Zahl n
  */
 double wurzel( double c, unsigned int n = 20 ) {
-    // …  
+    // ...
 }
 ```
 
@@ -547,7 +551,7 @@ double wurzel( double c, unsigned int n = 20 ) {
 * Der ausführbare Code eines Programms
   * meist nur lesbar
   * selbstmodifizierender Code aber möglich
-    
+
 **Global Segment**
 * Globale Variablen (*außerhalb* `main`) und feste Zeichenketten (*im Programm*)
 
@@ -888,6 +892,20 @@ string → double   stod
 string → long stol
 ```
 
+* In c++ können *strings* wie *streams* behandelt werden
+```c++
+#include <sstream>
+int main() {
+    std::stringstream stream("42 leckere Brezeln beim Bäcker.");
+
+    int zahl;
+    std::string text;
+    stream >> zahl;         // liest 42 in Variable zahl
+    stream >> text;         // liest "leckere" in Text
+    getline(stream, text);  // liest "Brezeln beim Bäcker."
+}
+```
+
 **Durchlaufen von Feldern**
 * Eigener Datentyp für Größen: `size_t`
 ```c++
@@ -980,13 +998,13 @@ P1
   * Funktionen verfügbar: `.size` und `.at(i)`
 * Klassen in c++
   * Repräsentant eines Objektes ist eine Klasse
-  * z.B. Klasse PKW, die Autos repräsentiert
+      * z.B. Klasse PKW, die Autos repräsentiert
   * ein Objekt ist eine Instanz einer Klasse
-  * z.B. Objekt diesesAuto des Typs PKW
+      * z.B. Objekt diesesAuto des Typs PKW
   * Attribute einer Klasse sind Variablen, die zur Klasse gehören
-  * z.B. Attribut fahrtüchtig in der Klasse PKW
+      * z.B. Attribut fahrtüchtig in der Klasse PKW
   * Methoden sind Funktionen die zur Klasse gehören
-  * z.B. fahrzeughalter() in der Klasse PKW
+      * z.B. fahrzeughalter() in der Klasse PKW
 
 ### Eigene Datentypen
 ```c++
@@ -1015,12 +1033,12 @@ std::vector<Student> studenten; // erstelle Liste bzw. Feld von Studenten
 studenten.push_back(student1);  // Füge eine Kopie von Otto zur Liste hinzu
 ```
 
-
 ### Klassen
 * Beschreibt den Aufbau von Objekten gleichen Typs
 * Definieren Funktionen, die mit den Objekten verbunden sind
-* Attribut → Eigenschaft bzw. Objektvariable
+* Attribut → Eigenschaft von Objekt bzw. Objektvariable
   * Variablen, die die Klasse beschreiben
+  * Stehen zum Objekt in einer *hat-*, *hat ein-* oder *besteht aus-Beziehung*
 * Klasse:   Student
 * Instanz:  RainerFunden, MaxMustermann
 * Methode:  Student::erhoeheStudiensemester(int)
@@ -1041,7 +1059,8 @@ studenten.push_back(student1);  // Füge eine Kopie von Otto zur Liste hinzu
   * kann überladen werden → Konstruktoren mit unterschiedlichen Argumentenlisten
   * *kein* Rückgabetyp
 * Zerstörung eines Typs einer Klasse durch aufrufen des **Destruktors**
-  * explizites Aufrufen durch `delete Objektname;`
+  * Aufruf, wenn das Objekt den Definitionsbereich verlässt
+  * *explizites* Aufrufen durch `delete Objektname;`
   * Name: `~Klassenname`
   * darf *keine* Argumente haben (wird automatisch aufgerufen)
   * ebenfalls *kein* Rückgabetyp
@@ -1054,12 +1073,15 @@ studenten.push_back(student1);  // Füge eine Kopie von Otto zur Liste hinzu
 class Klassenanme {
 public:
     // Öffentlich → für jeden sichtbar
-    // IdR. Methoden zum Lesen und Schreiben
+    // IdR. Methoden zum Lesen und Schreiben (aus/in private)
 protected:
     // Geschützt → nur für abgeleitete Klassen sichtbar
 private:
     // Privat → nur für Klasse selbst sichtbar
     // IdR. Attribute
+
+    friend class andereKlasse;
+    // andereKlasse darf auf private zugreifen
 };
 ```
 
@@ -1211,6 +1233,88 @@ Komplex sum6    = Komplex::add3(a,b);   // Memberfunktion (static) in nicht ganz
                                         // sollte dennoch vermieden werden…
 ```
 
+**Vererbung bzw. abgeleitete Klassen**
+* *ist ein-Beziehung*
+* Objekte stehen oft untereinander in Beziehung
+  * Jeder PKW ist ein Fahrzeug, d.h. er hat die Eigenschaften eines Fahrzeuges
+  * Jeder LKW ist auch ein Fahrzeug, d.h. er hat die Eigenschaften eines Fahrzeuges
+  * PKW und LKW haben aber zueinander unterschiedliche Eigenschaften
+  * Ein LKW hat z.B. einen Laderaum und ein dazugehöriges Ladevolumen ein Fahrrad nicht, obwohl es ein Fahrzeug ist
+  * `PKW` *erbt* von `Fahrzeug`
+      * `PKW` besitzt gleiche Attribute und Methoden wie `Fahrzeug`
+      * `PKW` ist die *abgeleitete Klasse*
+      * `Fahrzeug` ist die *Basisklasse* bzw. *Base Class*
+      * `PKW` ist ein *Untertyp* von `Fahrzeug` wenn `PKW` überall dort eingesetzt werden kann, wo `Fahrzeug` erwartet wird
+* abstrakte Methoden sind Funktionen, die von abgeleiteten Klassen überschrieben werden und in der Basisklasse nicht implementiert werden
+* abstrakte Klassen sind Klassen, die abstrakte Methoden enthalten
+  * können nicht erzeugt werden
+* Vererbung kann verhindert werden, in dem man die Klasse als `final` markiert
+
+```c++
+class Fahrzeug {            // allgemeine Fahrzeugklasse (Basisklasse)
+public:                     // Eigenschaften, die jedes Fahrzeug hat
+    void setV(double v);
+    void setA(double a);
+    double getV();
+    virtual bool getSchneeAufDach();        // Funktion darf in abgeleiteten Klassen überschrieben werden
+    virtual bool getSchneeAufDach() = 0;    // Selbiges; Funktion ist in der Basisklasse nicht implementiert
+    virtual bool motorFunktioniert();       // → abstrakte Methoden
+
+// Attribute
+    std::vector<Reifen> reifen;
+};
+
+
+class LKW : public Fahrzeug // LKW ist eine Erweiterung (Vererbung) von Fahrzeug
+{                           // LKW erbt alle Funktionen und Eigenschaften von Fahrzeug
+    double ladeVolumen;     // z.B. setV(), getV(), reifen…
+};
+
+class PKW : public Fahrzeug // PKW ist ein Fahrzeug und erweitert diese Klasse nicht
+{                           // (abgeleitete Klasse)
+};
+
+class Fahrrad final : public Fahrzeug               // Unterbindet erstellung von abgeleiteten Klassen
+    double bool getSchneeAufDach() override const { // Wir überschreiben bewust die Methode (kein Fehler)
+        return false;
+    }
+    double bool getSchneeAufDach() final {          // Wir überschreiben bewust die Methode und abgeleitete Klassen
+        return false;                               // dürfen diese nicht überschreiben
+    }
+};
+
+
+void fnkt1(LKW lkw) {
+    // berechne Ladung aus Ladevolumen, etc.
+}
+void fnkt2(Fahrzeug fahrzeug) {
+    std::cout << fahrzeug.getV();   // Darf sich nur auf Fahrzeug, nicht auf PKW/LKW beziehen
+}
+
+LKW brummi;
+fnkt1(brummi);  // Rufe Funktion, die Typ LKW erwartet auf
+fnkt2(brummi);  // Rufe Funktion, die Typ Fahrzeug erwartet auf
+
+PKW smarti;
+fnkt1(smarti);  // Fehler, da fnkt1 Typ LKW erwartet
+fnkt2(smarti);  // Ok, da Klasse PKW von Fahrzeug erbt und smit die Eigenschaften
+                // eines Fahrzeuges beseitzt
+```
+
+* Konstruktoren können auch *"vererbt"* werden
+* Destruktoren ebenso
+  * Überladen sinnvoll, da eventuell Destruktor der übergeordneten Klasse aufgerufen wird
+  * dann in abgeleiteter Klasse definieren mit `virtual ~KlassenName() {`
+
+siehe Komplex
+```c++
+class neuKomplex : Komplex {
+    neuKomplex(double r, double i, double skalar)   // Konstruktor von neuKomplex
+    : Komplex(r, i) {                               // Rufe Konstruktor von Kompex mit Parametern auf
+        // ...                                      // Konstruktor von neuKomplex
+    }
+```
+
 ### Aufteilung in Dateien
 **Header Student.hpp**
 * Beschreibung von Objekten und wie diese gespeichert sind
@@ -1270,6 +1374,6 @@ int main() {
   * `g++ -o programm main.cpp Studend.cpp`
 * Einzeln (bei größeren Programmen)
   * Erneute Kompilierung von Programmteilen möglich
-  * `g++ -c Student.cpp` Erzeugt student.o
-  * `g++ -c main.cpp` Erzeugt main.o
-  * `g++ -o programm student.o main.o` Binden zu Programm
+  * `g++ -c Student.cpp` Erzeugt `student.o`
+  * `g++ -c main.cpp` Erzeugt `main.o`
+  * `g++ -o programm student.o main.o` Binden zu `programm`
