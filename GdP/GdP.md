@@ -75,17 +75,17 @@ Bezeichner| Definiert als
 
 **Deklaration und Initialisierung**
 ```c++
-double d;               // deklariert aber nicht initialiert
+double d;               // deklariert aber nicht initialisiert
 double e = 1.0;         // reserviert Speicher und initialisiert ihn mit dem Wert 1
 double f( 1.0 );
-double g{ 1.0 };        // deklariert und initialisert, Prüfung auf Richtigkeit beim kompilieren
+double g{ 1.0 };        // deklariert und initialisiert, Prüfung auf Richtigkeit beim kompilieren
 double i = double();    // reserviert Speicher und initialisiert ihn mit dem Wert 0
 double j{};             // reserviert Speicher und initialisiert ihn mit dem Wert 0
 ```
 
 **Konstanten**
 ```c++
-double d{ 1.0 };                // defiert d und setzt den Wert von d auf 1.0
+double d{ 1.0 };                // definiert d und setzt den Wert von d auf 1.0
                                 // d kann im Programm verändert werden
 contexpr double e{ 0.5/3.1};    // e ist ein konstanter Ausdruck und nach Definition nicht veränderbar
 const double f{ 0.5/3.1 };      // f ist eine Konstante, die nach dem kompilieren konstant ist
@@ -161,9 +161,9 @@ unsigned int|32|4294967295
 short int|16|32767
 long int|64|2147483647
 long long int|64|(2^63)-1
-float|32|±1.2E − 38 … ± 3.4E + 38|7 Stellen
-double|64|±2.2E − 308 … ± 1.8E + 308|15 Stellen
-long double|80|±3.4E − 4932 … ± 1.2E + 4932|18 Stellen
+float|32|±1.2E - 38 … ± 3.4E + 38|7 Stellen
+double|64|±2.2E - 308 … ± 1.8E + 308|15 Stellen
+long double|80|±3.4E - 4932 … ± 1.2E + 4932|18 Stellen
 
 * Suffixe
   * geben den Datentyp an
@@ -179,8 +179,8 @@ long double|80|±3.4E − 4932 … ± 1.2E + 4932|18 Stellen
   * `unsigned int e{ 0b01100101 };` Binär
 
 * Infixe
-  * `double d{ 4e2 };` 400 = 4 ∗ 10^2
-  * `double d{ 4E2 };` 400 = 4 ∗ 10^2
+  * `double d{ 4e2 };` 400 = 4 * 10^2
+  * `double d{ 4E2 };` 400 = 4 * 10^2
 
 **Enumerationen**
 * Enumerationen (enum) sind selbstdefinierte Datentypen, die eine abzählbare Ausprägung von Werten besitzen
@@ -473,6 +473,7 @@ int CallByValue( int a ) {
 * bei großen Datenmengen
 * Daten können *nur gelesen* werden, da `const`
 * weist einen neuen Namen für die Bearbeitung in einer Unterfunktion zu (Verknüpfung)
+  * benötigt (theoretisch) keinen zusätzlichen Speicher
 * Speicheraufwand minimal
 ```c++
 int CallByConstReference( const int& a ) {
@@ -487,7 +488,9 @@ CallByConstReference(b);
 * bei großen Datenmengen
 * wenn Werte geändert werden müssen → `iostream`
 * weist einen neuen Namen für die Bearbeitung in einer Unterfunktion zu (Verknüpfung)
+  * benötigt (theoretisch) keinen zusätzlichen Speicher
 * Speicheraufwand minimal
+* *Referenzen sind immer neue Namen, für vorhandene Objekte*
 ```c++
 long long CallByReference( long long& a ) {
     a+= 3;
@@ -527,6 +530,7 @@ printf( "Hallo %d %d %d %d", 1, 2, 3, 4 );
  * @param c nicht negative, reellwertige Zahl
  * @param n gibt die Anzahl der Newton-Iterationen im numerischen Verfahren an
  * @return die Quadratwurzel zur Zahl n
+ * @pre c >= 0
  */
 double wurzel( double c, unsigned int n = 20 ) {
     // ...
@@ -616,7 +620,7 @@ Eine Funktion ruft *sich selbst* auf
 ```c++
 int funktion( … ) {
     if( Abbruchfall erreicht ) {            // Rekursionsanfang mit Abbruchbedingung
-    // Löse den einfachsten Fall           // (mehere möglich)
+    // Löse den einfachsten Fall           // (mehrere möglich)
     // Ergebnis zurückgeben
     } else {                                // Rekursionsschritt
     // Teile das Problem in Teilprobleme
@@ -871,8 +875,8 @@ string.rfind("match");          // Suche Position von "match" rückwärts
 
 // Suchen von einzelnen, wiederholenden Buchstaben
 std::string str ("Ersetze alle e und a durch Asterisks.");
-std::size_t found = str.find_first_of("ea");                // erster Druchlauf
-while (found!=std::string::npos) {                          // Druchlaufen, bis zum Ende erreicht
+std::size_t found = str.find_first_of("ea");                // erster Durchlauf
+while (found!=std::string::npos) {                          // Durchlaufen, bis zum Ende erreicht
     str[found]='*';                                         // falls gefunden → ersetzen
     found=str.find_first_of("ea",found+1);                  // weiter suchen
 }
@@ -955,7 +959,7 @@ array<double, M*N> A;
 A[ 3*M + 1 ] = 5.0;
 A.at( 3*M + 1 ) = 5.0;
 
-// Vektor → Jede Zeile muss sepatat in der Größe gesetzt werden
+// Vektor → Jede Zeile muss separat in der Größe gesetzt werden
 std::vector< std::vector< double > > feld2d( 3, std::vector< double >( 4 ) );
 // ist äquivalent zu:
 std::vector< std::vector< double > > feld2d( 3 );
@@ -1274,11 +1278,11 @@ class PKW : public Fahrzeug // PKW ist ein Fahrzeug und erweitert diese Klasse n
 {                           // (abgeleitete Klasse)
 };
 
-class Fahrrad final : public Fahrzeug               // Unterbindet erstellung von abgeleiteten Klassen
-    double bool getSchneeAufDach() override const { // Wir überschreiben bewust die Methode (kein Fehler)
+class Fahrrad final : public Fahrzeug               // Unterbindet Erstellung von abgeleiteten Klassen
+    double bool getSchneeAufDach() override const { // Wir überschreiben bewusst die Methode (kein Fehler)
         return false;
     }
-    double bool getSchneeAufDach() final {          // Wir überschreiben bewust die Methode und abgeleitete Klassen
+    double bool getSchneeAufDach() final {          // Wir überschreiben bewusst die Methode und abgeleitete Klassen
         return false;                               // dürfen diese nicht überschreiben
     }
 };
@@ -1377,3 +1381,405 @@ int main() {
   * `g++ -c Student.cpp` Erzeugt `student.o`
   * `g++ -c main.cpp` Erzeugt `main.o`
   * `g++ -o programm student.o main.o` Binden zu `programm`
+
+## Pointer (Zeiger)
+* Pointer sind Zeiger, die auf bestimmte Speicherstellen zeigen
+* Sie zeigen auf die erste Speicherstelle eines Objekts
+* Kennzeichnung durch `*` nach dem Datentyp
+  * `int* ptr` bedeutet, dass `ptr` ein Zeiger ist, der auf die Speicherstelle einer Ganzzahl zeigt
+  * `*ptr` verweist auf den Wert an der Speicherstelle, auf die `ptr` zeigt
+  * `ptr` bzw. `&a` verweist auf die Speicherstelle von dem Zeiger `ptr` bzw. der Variable `a`
+  * `nullptr` ist der *Null Pointer* → bewusst nicht gültiger Wert `0L`
+* Die Adresse, auf die der Zeiger zeigt, muss nicht sinnvoll sein und wird nicht überprüft
+* Referenzen sind Zeigern zu bevorzugen
+  * Referenzen sind neue Namen für vorhandene Objekte und belegen keinen Speicher
+  * Zeiger benötigen so viel Speicher, dass der gesamte Speicher adressiert werden kann
+
+```c++
+Datentyp *variablenname;    // erstellen eines Zeigers, der auf ein Objekt vom Typ Datentyp verweist
+new Datentyp(parameter);    // erzeugt Objekt vom Datentyp Datentyp auf dem Heap
+                            // gibt eine Speicheradresse zurück → Speicherung möglich
+variablenname;              // gibt Speicherstelle des Objektes zurück
+*variablenname;             // Dereferenzierung → Objekt an Speicherstelle
+(*variablenname).length();  // Funktionsaufruf mit Wert (wenn aus Klasse)
+vaiblenname->length();      // Selbiges in übersichtlich
+
+int a;
+&a;                         // gibt Speicheradresse von a zurück
+int* b= &a;                 // Zeiger b verweist auf Speicherstelle von a
+(*b) = 1;                   // Zugriff auf Objekt a
+
+int *z;
+z = new int;                // lege Objekt vom Typ int auf dem Heap an
+int *b = a;                 // b zeigt auf Speicherstelle von dem Objekt von a
+a = new int;                // b verweist noch auf das alte a
+a = b;                      // a verweist wieder auf altes a (bzw. b)
+```
+
+### Variablen auf dem Heap
+* Schlüsselwort `new` bedeutet, dass ein neues Objekt auf dem *Heap* erzeugt wird
+  * Objekt ist *anonym* bzw. es muss keiner Variablen zugewiesen sein
+  * Objekt bleibt im Speicher, selbst es „den Gültigkeitsbereich verlässt“
+  * bisherige Objekte liegen auf dem Stack (wessen Größe vom Compiler beschränkt ist)
+      * ebenso fester Gültigkeitsbereich, feste Größe
+* Löschen durch `delete` → gibt angefragten Speicher wieder frei
+  * Unbedingt notwendig (bei Klassen im Destruktor)
+
+```
+       +-----------+            int c;
+int  c |   Wert1   |            int* a = &d;
+       +-----------+            int* b = new int;
+int* a |Adresse  * |-----+
+       +-----------+     |      "Umbiegen" des Zeigers
+int* b |Adresse  * |---+ |      b = a;
+       +-----------+   | |      → b zeigt jetzt auf a
+       |    etc    |   | |      → b zeigt auf d
+       +-----------+   | |
+       |   Wert2   | <-+ |      Pointer belegen Speicher!
+       +-----------+     |
+int  d |   Wert3   | <---+
+       +-----------+
+```
+
+**Felder mit Zeigern**
+* `double *data = new double[i];` wie `std::vector`
+  * fragt Speicher für i Objekte des Typs `double` an
+* `data++` rückt den Zeiger um ein double-Wert weiter
+  * dabei wird um `sizeof(double)` weiter gerückt
+* `delte[] data` löscht alle Werte
+
+* `double data[i];` ist *nicht* nach C++-Standard
+* `double data[8];` ist ok, da ein statisches Feld erzeugt und automatisch geräumt wird
+
+### Verwendung von Zeigern
+#### Design-Pattern Factory Beispiel
+* Negativbeispiel (Warum Pointer?)
+```c++
+class Fahrzeug {...};
+class Fahrrad : public Fahrzeug {...};
+class PKW : public Fahrzeug {...};
+
+class Fabrik {                          // allgemeine Fabrik
+public:
+    virtual Fahrzeug Fahrzeug() = 0;    // Rückgabe von allgemeinen Fahrzeug (Typ Fahrzeug)
+};                                      // Funktion wird Überschrieben (ist abstrakt)
+
+class FahrradFabrik : public Fabrik     // Fahrradfabrik, als spezielle Fabrik, die erbt
+{
+public:
+    Fahrzeug neuesFahrzeug() {          // gibt Fahrzeug, vom Typ Fahrrad zurück
+        return Fahrrad();
+    }                                   // Fahrrad verlässt Gültigkeitsbereich → wird gelöscht
+};
+
+class AutoFabrik : public Fabrik        // Autofabrik, als spezielle Fabrik, die erbt
+{
+public:
+    Fahrzeug neuesFahrzeug() {          // gibt Fahrzeug, vom Typ PKW zurück
+        return PKW();
+    }
+};
+
+
+Fabrik f;                               // allgemeine Fabrik
+Fahrzeug fahrzeug = f.neuesFahrzeug();  // erstelle ein neues Fahrzeug, vom Typ Fahrzeug
+Fahrrad fahrzeug = f.neuesFahrzeug();   // erstelle ein neues Fahrrad, vom Typ Fahrrad
+Fahrzeug& fahrzeug = f.neuesFahrzeug(); // Erstelle Referenz auf fahrzeug
+```
+
+* Problem: Wenn ein Fahrrad erzeugt werden soll, also wenn die Fabrik eine Fahrradfabrik ist, wird dennoch ein allgemeines Fahrzeug zurückgeliefert
+  * Fahrrad müsste gleiche Speicherstruktur, wie Fahrzeug haben (wird in Fahrzeug umgewandelt)
+  * in Fahrzeug nicht vorhandene Attribute entfallen
+* Festlegen des Typs (`Fahrrad fahrzeug`) ist nicht möglich, da der Rückgabetyp der Fabrik nicht bekannt ist
+* Referenzen sind ebenfalls nicht praktikabel, da der Gültigkeitsbereich verlassen wird und somit das Originalobjekt nicht mehr existiert
+
+* Lösung mit Zeigern
+```c++
+class Fabrik {
+public:
+    virtual Fahrzeug* Fahrzeug() = 0;
+};
+
+class FahrradFabrik : public Fabrik
+{
+public:
+    Fahrzeug* neuesFahrzeug() {         // erzeuge ein neues Objekt auf dem Heap
+        return new Fahrrad();           // und übergebe die Speicheradresse
+    }
+};
+
+class AutoFabrik : public Fabrik
+{
+public:
+    Fahrzeug* neuesFahrzeug() {
+        return new PKW();
+    }
+};
+
+FahrradFabrik f;
+Fahrzeug* fahrzeug = f.neuesFahrzeug;
+```
+
+#### Vektoren
+```c++
+class Vektor {
+public:
+    Vektor(unsigned int size) {     // Erzeuge size Werte auf dem Heap (Feld)
+        data = new double[size];    // speichere die Adresse des ersten in data
+                                    // alle anderen Einträge liegen hinter data im Speicher
+    }
+    ~Vektor() {                     // Destruktor
+        delte[] data;               // löscht das Feld data
+    }
+
+    double at(unsigned int i) {     // ruft Wert an Stelle i auf (Fehlerbehandlung notwendig)
+        return data[i];             // gehe von data i double-Stellen weiter
+        return*(data + i);          // Selbiges nur besser ;)
+    }
+
+    // etc.
+
+private:
+    double *data;                   // der Zeiger data liegt auf dem Stack
+};
+
+Vektor a(10);   // erstelle neuen Vektor
+a.at(0);        // Eintrag von a an erster Stelle
+a.at(1);        // Eintrag von a an zweiter Stelle
+```
+
+#### Einfach Verkettete Listen
+* Datenstruktur, wobei jedes Element *einen Verweis auf den Nachfolger* enthält
+* Einfügen bzw. Löschen am Anfang sind einfachste Operationen
+* Zugriff bzw. Operationen mit dem letzten Element einfach umzusetzen aber eventuell zeitaufwendig
+  * Schleife notwendig
+
+* Stack (Stapel): vorne hinzufügen bzw. wegnehmen
+* Queue (Warteschlange): hinten hinzufügen bzw. wegnehmen
+
+```
+         +----+     +----+     +----+     +----+     +----+
+HEAD  +->|DATA|  +->|DATA|  +->|DATA|  +->|DATA|  +->|DATA|
++--+  |  +----+  |  +----+  |  +----+  |  +----+  |  +----+
+| *|--+  |   *|--+  |   *|--+  |   *|--+  |   *|--+  |NULL|
++--+     +----+     +----+     +----+     +----+     +----+
+```
+
+```c++
+class Element {
+public:
+    double data;
+    Element* next;
+};
+
+class Liste {
+public:
+    Liste() {                               // Konstruktor
+        head = nullptr;                     // erdeute leere Liste
+    }    
+    ~Liste() {                              // Destruktor
+        while( !empty() ) {                 // Solange Liste nicht leer, entferne erstes Element
+            pop_front();
+        }
+    }
+        
+    void push_front( double wert ) {        // An Anfang anfügen
+        if( !head ) {                       // falls Liste leer (head == nullptr)
+            head = new Element;             // neues Element anlegen
+            head->data = wert;              // Daten von Element auf wert setzen
+            head->next = nullptr;           // Nachfolger auf nullptr setzen
+        } else {
+            Element* temp = new Element;
+            temp->data = wert;
+            temp->next = head;              // Lass neues Element auf alten head zeigen
+            head = temp;                    // Lass head auf neues Element zeigen
+        }
+    }
+
+    void pop_front() {                      // Entfernt das erste Element
+        if( head ) {                        // wenn Liste nicht leer
+            Element *temp = head;           // Kopiere head
+            head = head->next;              // Setzte head auf zweiten Eintrag
+            delete temp;                    // lösche alten head
+        } else {
+            // Fehler ausgeben
+        }
+    }
+
+    void pop_back() {                       // Entfernt das letzte Element
+        Element* temp = head;
+        while( temp->next->next ) {         // Solange next gültig ist, gehe weiter
+            temp = temp->next;              // beim Listenende ist temp-> next == nullptr
+        }                                       // suche vorletztes Element
+        delete temp->next;                  // dann lösche das letzte Element
+        temp->next = nullptr;               // setzte next vom Vorletzten auf nullptr
+    }
+
+    void push_back( double d ) { ... }
+
+    bool empty() {                          // prüft, ob die Liste leer ist
+        return head == nullptr;
+    }
+
+    double at( int i ) {                    // gibt Element an der i-ten Stelle aus
+        Element* temp = head;
+        for( int z = 0; z < i; ++z ) {      // Solange temp gültig ist, gehe weiter
+            if( temp ) {
+                temp = temp->next;
+            }
+        }
+        if( temp ) {                        // wenn temp gültig ist, gebe Daten zurück
+            return temp->data;
+        } else {
+            // Fehler ausgaben
+        }
+    }
+
+    void ausgabe() const {                          // Debugfunktion
+        std::cout << "===================\n";           // Trennung
+        std::cout << "head: " << head << "\n";          // Listenkopf
+        Element* temp = head;
+        while( temp ) {                                 // gehe ganze Liste durch; für jedes Element:
+            std::cout << "addr: " << temp << " ";           // gebe Adresse aus
+            std::cout << "data: " << temp->data << " ";     // gebe Daten von Element aus
+            std::cout << "next: " << temp->next << "\n";    // gebe Nachfolgeradresse aus
+            temp = temp->next;
+        }
+        std::cout << "===================\n";           // Trennung
+    }
+        
+private:
+    Element *head;
+};
+
+
+int main()
+{
+    Liste liste;
+    liste.ausgabe();
+    liste.push_front(3);
+    liste.push_front(2);
+    liste.ausgabe();
+}
+```
+
+**Verbesserungen**
+* `tail` in Listenklasse als Attribut speichern
+* „Rückverbindungen“ zum Vorgänger speichern → Schleifen fallen weg
+
+## Fehlerbehandlung und Ausnahmen
+* Programm wird nach Spezifikation geschrieben, welche einen Teil der möglichen Eingaben abdeckt
+* Es muss entschieden werden, was im Fehlerzustand passiert
+  * Manchmal ist es sinnvoll, den Kontrollfluss kontrolliert zu verlassen → **Ausnahme**
+  * der Fehler kann auch ignoriert werden (fehleranfällig)
+  * Fehlerwert implementieren (aufwendig)
+
+### Definitionen
+**Korrektheit**
+* Eigenschaft eines Systems, die Anforderungsspezifikation vollständig zu erfüllen
+* Ein System ist korrekt, wenn es die explizit spezifizierten Anforderungen erfüllt
+
+**Zuverlässigkeit**
+* Fähigkeit eines Systems (aus Hard- und Software), in einer gegebenen Zeitspanne unter zulässigen Betriebsbedingungen, das spezifizierte Verhalten zu erbringen
+
+**Robustheit**
+* System reagiert vernünftig auf Eingaben, die nicht in der Anforderungsspezifikation erfasst sind
+
+### Ausnahmen
+* Tritt eine Ausnahmesituation auf, so kann eine Ausnahme (*exception*) geworfen (*throw*) werden
+* verlässt Kontrollfluss an der Stelle, an der das Ausnahmeobjekt geworfen wird
+* Fangen (*catch*) der Ausnahme führt zum fortsetzen an der Stelle des Fanges
+  * nicht gefangen → beenden
+
+**Aufbau**
+```c++
+try {
+    // ...
+    // wird bis hierher normal ausgeführt
+    // bis Ende durch return- bzw. break-Anweisung
+    throw std::runtime_error( "Laufzeitfehler" );
+    // ab hier wird nicht mehr ausgeführt
+    // ...
+}
+
+catch( std::out_of_range& e ) {
+    // Behandung von Ausnahmen, des Typs std::out_of_range
+}
+
+catch( std::runtime_error& e ) {
+    // Behandung von Ausnahmen, des Typs std::runtime_error
+}
+
+catch(...) {
+    std::cerr << "Fehler \"" << e.what() << "\" aufgetreten." << std::endl;
+    throw; // wirft e weiter
+}
+```
+
+**Beispiel**
+```c++
+class KleinerNull {};                   // Kann leer sein
+
+double Wurzel(double a) {   <───╮
+    if(a < 0) {                 │
+        throw KleinerNull();    │
+    }                           │
+    return a;   ────────────────┼───╮
+}                               │   │
+int main() {                    │   │
+    double a = +1;              │   │
+    try {                       │   │
+        double b = Wurzel(a);  ─╯ <─╯
+        std::cout << "sqrt: " << a;
+    } catch(KleinerNull& ausnahme) {    ────────╮
+        std::cout << "KleinerNull-Ausnahme";    │
+    }   <───────────────────────────────────────╯
+}
+```
+```c++
+class KleinerNull {};                   // Kann leer sein
+
+double Wurzel(double a) {   <───╮
+    if(a < 0) {                 │
+        throw KleinerNull(); ───┼───╮   
+    }                           │   │
+    return a;                   │   v
+}                            ───┼───╮
+int main() {                    │   │
+    double a = -1;              │   │
+    try {                       │   │
+        double b = Wurzel(a);  ─╯   │
+        std::cout << "sqrt: " << a; │
+    }                               │
+    catch(KleinerNull& ausnahme){ <─╯
+        std::cout << "KleinerNull-Ausnahme";
+    }
+}
+```
+
+#### Klassenhierarchie der Ausnahmen der Standardbibliothek
+`std::exception`
+* `std::logic_error` *Programmlogikfehler*
+  * `std::invalid_argument`
+  * `std::domain_error`
+  * `std::length_error`
+  * `std::out_of_range`
+  * `std::future_error` (C++11)
+* `std::runtime_error` *Laufzeitfehler*
+  * `std::range_error`
+  * `std::overflow_error`
+  * `std::underflow_error`
+* `std::system_error` (C++11)
+  * `std::ios_base::failure` (C++11)
+
+Wird `std::runtime_error` gefangen, so werden auch alle Unterklassen davon gefangen.
+
+**Laufzeitfehler**
+* machen Software weniger robust
+* Fehlerhafte Buntziereingaben
+* fehlende bzw. fehlerhafte Dateien
+* Zu wenig Speicher
+
+**Programmlogikfehler**
+* in der Regel Programmierfehler
+* Zugriffe auf ungültigen Speicher bzw. Elemente außerhalb Reichweite
