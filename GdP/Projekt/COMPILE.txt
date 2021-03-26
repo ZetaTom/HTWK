@@ -1,0 +1,3 @@
+g++ -Wall --std=c++11 -o test test.cpp komplex.cpp komplexnd.cpp
+g++ -Wall --std=c++11 -o pnc pncalc.cpp komplex.cpp
+
