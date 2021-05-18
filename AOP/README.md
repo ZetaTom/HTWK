@@ -1,4 +1,5 @@
-# Anwendungsorientierte Programmierung – Java (Sprich Tschahwah)
+# Anwendungsorientierte Programmierung
+> Java – Sprich Tschahwah
 
 ## Konventionen
 * Bezeichner für Klassen und Packages beginnen mit Großbuchstaben
@@ -112,7 +113,7 @@ switch (Ausdruck) {     // Konstante (String, Char, Byte, Int, etc.)
         //blub          // Im 2. und 3. Fall
         break;          // Restliche Fälle nicht betrachten
     default:
-        //...           //Standardfall
+        //...           // Standardfall
 }
 ```
 
@@ -204,7 +205,7 @@ static Rückgabetyp Name(Parameter) {
 ```java
 Deklaration
 static void add(double x, int y) {...}
-Stignatur
+Signatur
 add(double, int)
 ```
 
@@ -260,12 +261,11 @@ else
 **Try-Catch-Blöcke**
 ```java
 try {
-    // Anweisungen die eine allgemeine IOException, eine
-    // FilenotFoundException oder eine NumberFormatException
-    // auslösen
+    // Eventuelle IOException, FilenotFoundException
+    // oder NumberFormatException
 } catch (IOException e) {
     if (e instanceof FileNotFoundExcception) {
-        // Behandlung von dieser Ausnahme
+        // Behandlung von FileNotFoundExcception
     } else {
         // allgemeiner Eingabefehler
     }
@@ -273,7 +273,7 @@ try {
     // Behandlung dieser Ausnahme
 }
 finally {
-    // wird immer ausgeführrt
+    // wird immer ausgeführt
 }
 ```
 
@@ -336,4 +336,124 @@ Scanner reader = new Scanner(istream, "UTF-8");
 // eventuelle UnsupportedEncodingException
 if(reader.hasNextDATENTYP)      // falls DATENTYP als nächstes
     reader.nextDATENTYP();      // liest einen DATENTYP ein
+```
+
+## Klassen – diesmal objektorientiert
+* Objekte können ihren Zustand ändern und mit anderen Objekten interagieren
+* die Implementierung muss nicht bekannt sein
+* gleichartige Objekte werden in eine Klasse geschmissen
+  * Objekte von Klassen heißen Instanzen
+  * Daten werden in Attributen gespeichert
+  * Verhalten und Änderung von Daten wird durch Methoden gehandhabt
+
+### Schreiben von Klassen (compilation units)
+```java
+package pkgA;
+    package pkgB;
+    public class ThisClass {...}
+    class OtherClass {...}
+```
+* `pkgB` ist ein *Unterpaket* von `pkgA`
+* `pkgA.pkgB` vollständig qualifizierter Name von `pkgB` (eindeutig)
+
+```java
+public class Name extends Human {
+    // ...
+}
+```
+* `extends ...` Klasse erbt von ...
+* Klassen können auch innere Klassen besitzen
+
+**Modifizierer für Klassen**
+* `public` in jedem Teil des Programms sichtbar
+* `private` nur innerhalb des Pakets sichtbar
+
+**Modifizierer von Attributen und Methoden**
+* `public` ist überall sichtbar und zugreifbar
+* `private` nur innerhalb der Klasse sichtbar, für interne Unterprogramme
+* `static` Methoden und Attribute nicht an Objekte bzw. Instanzen gebunden
+  * Aufruf bzw. Zugriff ohne Objekt möglich
+  * existiert in der Klasse nur einmal; nicht für jedes Objekt
+      * gleich in jeder Instanz
+  * selten und bedacht benutzen
+* `final` Attribute können nur einmal zugewiesen werden (Konstante)
+  * meist in Großbuchstaben und `public`
+
+#### this-Referenz
+* `this` verweist auf die aktuelle Klasseninstanz
+* kann nicht in statischen Methoden verwendet werden
+
+```java
+public class Clash {
+    public String name;
+    public setName(String name) {
+        this.name = name;
+    }
+    public copyName(Clash copy) {
+        this.name = copy.name;
+    }
+}
+```
+
+#### Konstruktoren
+* für alle mit `new` angelegten Objekte muss Speicher reserviert werden, dies geschieht im Konstruktor
+* Standard-Konstruktor
+  * `public Klasse() {}` wird standardmäßig angelegt
+  * alle Werte mit *null* oder *0* bzw. *0.0* initialisiert
+  * falls eigene Konstruktoren erstellt werden, fügt der Compiler keinen Standardkonstruktor ein
+* Parametrische Konstruktoren
+  * Konstruktoren, die Parameter übernehmen
+  * Konstruktoren können überladen werden
+* Copy-Konstruktor
+  * Konstruktor, der als Parameter ein Objekt der Klasse nimmt
+  * meist, um eine Kopie zu erstellen
+
+```java
+public class Person {
+    // Standardkonstruktor
+    public Person() {
+        this.name = "Max Mustermann";
+        this.age = 18;
+    }
+
+    public Person(String name) {
+        this.name = name;
+    }
+
+    // Copy-Konstruktor
+    public Person(Person copy) {
+        this.name = copy.name;
+        this.age = copy.age;
+    }
+    
+    // Pseudokonstruktor als statische Methode
+    static Person read(InputStream istream) {
+        Person result = new Person();
+        return result;
+    }
+
+    // Attribute
+    private String name;
+    private int age;
+}
+```
+
+### Ableiten von Klassen
+* durch `extends` wird eine Klasse aus einer anderen abgeleitet
+  * Erweiterung der Klasse um Methoden bzw. Attribute
+  * Werte und Konstruktoren werden nicht weitergegeben
+* mit `instanceof` kann geprüft werden, ob ein Objekt eine Instanz von einer Klasse ist
+
+```java
+public class A {}
+public class AA extends A {}
+public class AAA extends AA {}
+public class AB extends A {}
+
+A a new AAA();
+
+a instanceof A      // true
+a instanceof AA     // true
+a instanceof AAA    // true
+a instanceof AB     // false
 ```
