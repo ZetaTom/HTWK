@@ -457,3 +457,111 @@ a instanceof AA     // true
 a instanceof AAA    // true
 a instanceof AB     // false
 ```
+
+#### Polymorphie und Super
+* Überschreiben: eine Unterklasse enthält eine Methode, mit gleichem Namen und gleicher Signatur, wie die Oberklasse
+* Hierbei wird immer die Methode der nächsten Hierarchiestufe
+* Attribute können auch überschrieben werden
+
+* eine überschriebene Methode kann über die vordefinierte Referenz `super` wieder aufgerufen werden
+* gilt auch für Konstruktoren
+
+```java
+public class Pot {
+    public void print() {
+        System.out.println("Pot");
+    }
+}
+
+public class TeaPot extends Pot {
+    @Override
+    public void print() {
+        System.out.println("TeaPot");
+    }
+    public void pprint() {
+        System.out.println("I’m the prettiest TeaPot that ever lived");
+    }
+    public void printPot() {
+        super.print();
+    }
+}
+
+PrintA p = new Pot();
+PrintB t = new TeaPot();
+
+p.print();                  // Pot
+t.print();                  // TeaPot 
+t.printPot();               // Pot
+```
+
+**Anmerkung zu Konstruktoren**
+* wird von einer Unterklasse eine Instanz angelegt, so werden der Hierarchie nach alle Standerdkonstruktoren der Oberklassen nach einander aufgerufen
+* die oberste Klasse ist immer `Object()`
+* falls in einer Oberklasse nur ein parametrisierter Konstruktor vorhanden ist, kann eine Instanz der Unterklasse nicht eindeutig konstruiert werden
+  * Standardkonstruktor für übergeordnete Klassen anlegen
+  * parametrisierten Konstruktor durch `super(...)` aufrufen
+
+#### Abstrakte Klassen
+* Deklaration einer Oberklasse, deren Methoden und Attribute
+* Implementierung in abgeleiteten Klassen
+* erzeugen mit `new` nicht möglich (Implementierung fehlt)
+
+```java
+public abstract class Container {
+    public double volume;
+    public void printVolume() {
+        System.out.println(volume);
+    }
+    public abstract void fill(Beverage beverage, double amount);
+    public abstract void pour(double amount);
+}
+```
+
+**Finale Klassen und Methoden**
+* `final` verhindert das Überschreiben in abgeleiteten Klassen
+* kompatibel mit Klassen und Methoden
+
+```java
+public class Stop {
+    public final int stopNumber() {
+        return id;
+    }
+}
+
+public final class BusStop extends Stop {
+    // Überschreiben von stopNumber nicht möglich
+    // ableiten von dieser Klasse nicht möglich
+}
+```
+
+### Schittstellen (Interfaces)
+* Klassenbeschreibungen, welche *nur abstrakte Methoden und finale statische Attribute* beinhalten
+* Vererbung -> Implementierung verpflichtend
+* kein `abstract` oder `static final`
+  * `default` Implementierung im Interface, standardmäßig public, wird vererbt (ab Java 8)
+  * `static` Implementierung im Interface, wird nicht vererbt -> Aufruf immer über das Interface direkt
+
+```java
+public interface MathsObject {
+    int pi = 3;
+    static int printPi() {
+        System.out.println(pi);
+    }
+}
+
+public interface Polygon extends MathsObject {
+    double getArea(double length, double width);
+}
+
+public Square implements Polygon {
+    public double getArea(double length, double width) {
+        return length * width;
+    }
+}
+
+public Triangle implements Polygon {
+    public double getArea(double length, double width) {
+        return length * width / 2;
+    }
+}
+```
