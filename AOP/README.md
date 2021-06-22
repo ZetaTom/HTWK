@@ -6,7 +6,6 @@
 * Bezeichner für Variablen und Funktionen bzw. Methoden beginnen mit Kleinbuchstaben
 * *camelCase* ist üblich zur Strukturierung
 
-
 ## Datentypen
 Typ|Wertebereich|Größe|Format
 ---|------------|-----|------
@@ -44,8 +43,7 @@ Zur Konvertierung von Datentypen vorgesehen: `double x = Double.valueOf("3.14159
 **Strings – Zeichenketten**
 * *String* ist eine Klasse
 * Bsp.: `"blub."` und `"Ich\nbinn\b\n\tein\n\t\tString.\a"`
-* Verkettung möglich `"3 × 3 macht" + " neune"`
-
+* Verkettung möglich `"3 × 3" + " macht" + " neune"`
 
 ## Ausdrücke und Schleifen
 * Sichtbarkeitsregeln wie in c++
@@ -539,7 +537,7 @@ public final class BusStop extends Stop {
 * Vererbung -> Implementierung verpflichtend
 * kein `abstract` oder `static final`
   * `default` Implementierung im Interface, standardmäßig public, wird vererbt (ab Java 8)
-  * `static` Implementierung im Interface, wird nicht vererbt -> Aufruf immer über das Interface direkt
+  * `static` Implementierung im Interface, wird nicht vererbt --> Aufruf immer über das Interface direkt
 
 ```java
 public interface MathsObject {
@@ -565,3 +563,234 @@ public Triangle implements Polygon {
     }
 }
 ```
+
+### Innere Klassen
+* Deklaration einer Klasse innerhalb einer anderen
+  * Strukturierung
+  * eingeschränkte Sichtbarkeit
+  * insbesondere in der GUI-Programmierung
+* Sichtbarkeitsmodifikatioren sind zulässig
+* innere Klassen können auf Methoden/Attribute der äußeren zugreifen
+* *Shadowing*, nicht gekonnt; nicht erklärt; nicht verstanden
+
+```java
+public class Computer {
+    private Processor cpu = new Processor("x86_64");
+
+    public class Processor {
+        String arch;
+        Engine(int architecture) {
+            arch = architecture;
+        }
+    }
+
+    int getArch() {
+        return cpu.arch;
+    }
+}
+
+// Zugriff auf innere Klasse
+Computer rpi = new Computer();
+rpi.cpu.arch = "arm64";
+```
+
+**Varianten von inneren Klassen**
+* Lokale Klassen
+  * Deklaration innerhalb von Methoden oder Blöcken
+* Anonyme Klassen
+  * eventuell ohne Namen als Implementation eines Interfaces
+* Statische innere Klassen
+  * innere Klasse kann ohne Instanz der äußeren Klasse erzeugt werden
+
+### Modellierung von Daten
+Möglichkeiten zur Umsetzung
+* Ableitung (***is-a** relation*)
+* Implementierung von Interfaces
+* Komposition (***has-a** relation*)
+  * Aggregation
+  * Bekanntschaft
+* Entwurfsmuster
+
+#### Verwendung von Interfaces
+```java
+interface Purchaseable {
+    void setPrice(double p);
+    double getPrice();
+}
+
+public abstact class PCFan implements Purchaseable {
+    private double price;
+    private int dimX, dimY;
+    
+    public void setPrice(double p) {
+        price = p;
+    }
+    
+    public double getPrice() {
+        return price;
+    }
+    
+    // ...
+}
+
+public class Fan120mm extends PCFan {
+    // ...
+}
+
+public class Petrol implements purchaseable {
+    private double pricePerLitre;
+    
+    public void setPrice(double p) {
+        pricePerLitre = p;
+    }
+    
+    public double getPrice() {
+        return pricePerLitre;
+    }
+}
+```
+
+#### Komposition
+**TO DO**
+
+#### Entwurfsmuster
+**Sigleton**
+* *nur eine Instanz*
+  * Konstruktor `private` --> neue Instanzen können nicht angelegt werden
+  * `get...()` Methode gibt diese Instanz zurück bzw. erstellt eine neue
+
+```java
+public class TheOne {
+    private static TheOne one = null;
+    private static String msg;
+
+    private TheOne() {
+        msg = "The one and only";
+    }
+
+    public static TheOne getOne() {
+        if(one == null)
+            one = new TheOne();
+        return one;
+    }
+}
+```
+
+**Factory**
+* Fabrik zur Erzeugung spezifischer Klassen
+  * Oberklasse als Produzent --> Produziert Unterklassen
+  * Konstruktoren der Unterklassen können `private` sein
+
+```java
+public abstract class Factory {
+    public static Factory generate(String type) {
+        switch(type) {
+            case "Kaesekuchen": return new Kaesekuchen();
+            case "Himbeerkuchen": return new Himbeerkuchen();
+            case "Zupfkuchen": return new Zupfkuchen();
+            default: return new Tortenboden();
+        }
+    }
+    public abstract void produce();
+}
+
+public class Kaesekuchen() {
+    public void produce() {
+        System.out.println("A delicious Kaesekuchen is in the oven.");
+        System.out.println("A delightful smell escapes the factory.");
+    }
+}
+
+// ...
+
+public static void main() {
+    Factory[] factories = {Factory.generate("Kaesekuchen"), Factory.generate("Zupfkuchen")};
+    for(Factory f : factories)
+        f.produce();
+```
+
+### Generische Klassen
+* Klassen (z.B. Felder) können nur eine Art von Information speichern
+* Speicherung von verschiedenen Informationen in einer Klasse -> Generischen Klassen
+  * Verwendung von Typparametern als Platzhalter
+  * in Deklaration als `<T>` oder `<Type>` etc.
+  * innerhalb der Klasse als `T` oder `Type` etc.
+  * bei der Deklaration / Initialisierung von Instanzen als tatsächlicher Datentyp
+      * **nur Wrapper für primitive Datentypen zulässig**
+  * mögliche Datentypen auf Oberklasse einschränken: `<T extends Comparable>`
+* vom Basisdatentyp unabhängige Methoden
+  * `public static void print(Pair<?> pair) {`
+  * `public static void printGreater(Pair<? extends Comparable> pair) {`
+
+```java
+public class Pair<T> {
+    private T left, right;
+    public Pair<T>(T left, right) {
+        this.left = left;
+        this.right = right;
+    }
+    public <T> T getLeft() {
+        return left;
+    }
+    public <T> T getRight() {
+        return right;
+    }
+    public void setLeft(T left) {
+        this.left = left;
+    }
+    public void setRight(T right) {
+        this.right = right;
+    }
+    @Override
+    public String toString() {
+        return "(" + left + ", " + right + ")";
+    }
+}
+
+Pair<String> pair = new Pair<String>("Left element", "Right element");
+```
+
+## Java-Collections-Framework
+* fertige generische Klassen zur Datenverwaltung (*Collections*)
+
+### Collections – Interfaces
+Interface |Besonderheiten
+----------|------------------------------------------
+List      |geordnete Zusammenfassung von Elementen<br>Duplikate möglich<br>Zugriff über Indices
+Set       |unsortierte Menge von Elementen<br>keine Duplikate
+Map       |Zuordnung: Element \<-\> Schlüssel<br>eindeutige Schlüssel
+Deque     |Einfügen und Entfernen am Ende oder Anfang<br>z.B. FIFO, LIFO, etc.
+
+**Interface `Collection<T>`**
+* `boolean add(T el)` fügt *el* hinzu, gibt *true* zurück falls erfolgreich
+* `boolean addAll(Collection <? extends T> coll)` fügt alle *el* aus *coll* hinzu
+* `boolean remove(T el)` entfernt *el*, gibt *true* zurück falls erfolgreich
+* `boolean removeAll(Collection <? extends T> coll)` entfernt alle *el*, die in *coll* enthalten sind
+* `void clear()` löscht alle Elemente
+* `boolean isEmpty()` gibt *true* zurück, falls Collection keine Elemente beinhaltet
+* `boolean contains(T el)` gibt *true* zurück falls *el* enthalten
+* `int size()` liefert Elementanzahl
+* `Object[] toArray()` alle Elemente in einem Feld abspeichern
+* `Iterator<T> iterator()` liefert Objekt zum Durchlaufen
+
+**Anmerkungen**
+* `UnsupportedOperationException` falls eine Operation für die Klasse nicht gültig oder nicht implementiert ist
+* `equals()` sollte bei Verwendung von Collections implementiert werden
+
+### Collections – Implementierungen
+Typ   |Name               |Besonderheit
+------|-------------------|----------------------------------------
+List  |ArrayList          |Liste als Feld
+<br>  |LinkedList         |Doppelt verkettete Liste
+Set   |HashSet            |Menge implementiert durch Hash-Verfahren
+<br>  |TreeSet            |sortiert, als Baum
+<br>  |LinkedHashSet      |sortiert, durch Hash-Verfahren
+Map   |HashMap            |Assoziationen durch Hash-Verfahren
+<br>  |TreeMap            |sortiert, Assoziationen durch Baum
+<br>  |LinkedHashMap      |sortiert, durch Hash-Verfahren
+<br>  |WeekHashMap        |Elemente können entfernt werden
+Queue |LinkedList         |Doppelt verkettete Liste
+<br>  |ArrayBlockingQueue |Blockierende Warteschlange
+<br>  |PriorityQueue      |Prioritätswarteschlange
+
+!ToDo: Implementierungsbesonderheiten
