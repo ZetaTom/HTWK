@@ -604,9 +604,9 @@ rpi.cpu.arch = "arm64";
 
 ### Modellierung von Daten
 Möglichkeiten zur Umsetzung
-* Ableitung (***is-a** relation*)
+* Ableitung (*is-a relation*)
 * Implementierung von Interfaces
-* Komposition (***has-a** relation*)
+* Komposition (*has-a relation*)
   * Aggregation
   * Bekanntschaft
 * Entwurfsmuster
@@ -794,3 +794,83 @@ Queue |LinkedList         |Doppelt verkettete Liste
 <br>  |PriorityQueue      |Prioritätswarteschlange
 
 !ToDo: Implementierungsbesonderheiten
+
+### Collections – Iteratoren
+* `Iterator<T> iterator()` liefert Objekt, mit dem man alle Objekte aus der jeweiligen *Collection* durchlaufen kann
+* Iterator-Interface
+  * `boolean hasNext()` *true*, falls noch Objekte vorhanden sind
+  * `T next()` liefert nächstes Element
+  * `void remove()` löscht das zuletzt gelieferte Element
+* Grundlage für *for-each-Schleifen* benötigt
+
+```java
+List<Integer> list = new LinkedList<>();
+for(int i = 0; i < 5; ++i) {
+    list.add(i);
+System.out.println(list);                   // [0, 1, 2, 3, 4]
+Iterator<Integer> iter = list.iterator();
+boolean del = false;
+while(iter.hasNext()) {
+    it.next();
+    if(del)
+        iter.remove();
+    del = !del;
+}
+System.out.println(list);                   // [0, 2, 4]
+```
+
+### Collections – Comparable
+* damit Vergleiche und Sortierung funktioniert, muss `Comparable<T>` implementiert werden
+* Methode `int compareTo(T to)` muss implementiert werden
+  * *< 0*, falls `this < to`
+  * *= 0*, falls `this == to`
+  * *> 0*, falls `this > to`
+* Methode `a.equals(b)` liefert true, falls `a == b` gilt
+* außerdem kann `hashcode()` relevant sein
+
+### Lambda-Ausdrücke
+`(p1, p2) -> expression` oder `p1 -> {...}`
+* Vgl. kurze Methoden ohne Name, welche gleich implementiert werden
+  * werden meist als Parameter beim Funktionsaufruf übergeben
+  * können in Variablen gespeichert werden
+* *Ausdrücke* (ohne `{}`) liefern sofort einen `return`-Wert, enthalten keine Variablen, Zuweisungen oder Anweisungen, wie `if`
+* bei einem Parameter fallen `()` weg, ebenso beim Aufruf einer `void`-Methode fallen `{}` weg
+* Datentyp des `return`-Wertes und teils auch der Parameter ergeben sich aus der Umgebung
+* [Weitere Infos und Quelle](https://www.w3schools.com/java/java_lambda.asp)
+
+```java
+ArrayList<Integer> num = new ArrayList<Integer>();
+num.add(5);
+// ...
+num.forEach((n) -> {System.out.println(n);});
+// als Variable
+Consumer<Integer> method = (n) -> {System.out.println(n);};
+numbers.forEach(method);
+```
+
+* bei der Verwendung von Lambda-Ausdrücken in Methoden sollte ein Interface verwendet werden
+```java
+interface StringFunction {
+  String run(String str);
+}
+
+public class Main {
+  public static void main(String[] args) {
+    StringFunction exclaim = (s) -> s + "!";
+    StringFunction ask = (s) -> s + "?";
+    printFormatted("Hello", exclaim);
+    printFormatted("Hello", ask);
+  }
+  public static void printFormatted(String str, StringFunction format) {
+    String result = format.run(str);
+    System.out.println(result);
+  }
+}
+```
+
+## GUI – Graphische Benutzeroberflächen
+* Grundlegende Trennung von Programmlogik und GUI
+* Verwendung von `java.awt` und `javax.swing` bzw. `javafx.` (moderner)
+* Objektorientierter Ansatz
+  * Fenster, Dialogelemente, Knöpfe, etc. sind Objekte
+  * Interaktionen mit Objekten über deren Methoden
